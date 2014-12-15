@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backbg" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="55dp"
+        android:paddingTop="15dp" >
+
+        <RelativeLayout
+            android:id="@+id/card_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="15dp" >
+
+            <RelativeLayout
+                android:id="@+id/back_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true" >
+
+                <TextView
+                    android:id="@+id/back_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="23sp" />
+
+                <ImageButton
+                    android:id="@+id/back_speek"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:onClick="speech"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_tts" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/back_first_part"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/back_top"
+                android:layout_marginLeft="20dp"
+                android:paddingBottom="4dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    android:id="@+id/back_part1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:textIsSelectable="true"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:id="@+id/back_seprator1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/back_part1"
+                    android:background="#ccc" />
+
+                <TextView
+                    android:id="@+id/back_part2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/back_seprator1"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:textIsSelectable="true"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/back_seprator2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/back_part2"
+                    android:background="#ccc" />
+
+                <TextView
+                    android:id="@+id/back_example"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/back_seprator2"
+                    android:layout_marginLeft="5dp"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/back_seprator3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/back_first_part"
+                android:background="#ccc" />
+
+            <RelativeLayout
+                android:id="@+id/detail_list_trans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/back_seprator3" >
+
+                <ImageButton
+                    android:id="@+id/back_loadtrans"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="25dp"
+                    android:background="@null"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/trans" />
+
+                <TextView
+                    android:id="@+id/back_trans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:paddingRight="3dp"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/card_flip"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:onClick="flipCardBack"
+        android:scaleType="centerInside"
+        android:src="@drawable/flip" />
+
+    <ImageButton
+        android:id="@+id/card_know"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:onClick="levelUp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ok" />
+
+</RelativeLayout>

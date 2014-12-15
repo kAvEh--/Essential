@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Essential Words</string>
+
+    <string-array name="lessions_array">
+        <item>Lession 1</item>
+        <item>Lession 2</item>
+        <item>Lession 3</item>
+        <item>Lession 4</item>
+        <item>Lession 5</item>
+        <item>Lession 6</item>
+        <item>Lession 7</item>
+        <item>Lession 8</item>
+        <item>Lession 9</item>
+        <item>Lession 10</item>
+        <item>Lession 11</item>
+        <item>Lession 12</item>
+        <item>Lession 13</item>
+        <item>Lession 14</item>
+        <item>Lession 15</item>
+        <item>Lession 16</item>
+        <item>Lession 17</item>
+        <item>Lession 18</item>
+        <item>Lession 19</item>
+        <item>Lession 20</item>
+        <item>Lession 21</item>
+        <item>Lession 22</item>
+        <item>Lession 23</item>
+        <item>Lession 24</item>
+        <item>Lession 25</item>
+        <item>Lession 26</item>
+        <item>Lession 27</item>
+        <item>Lession 28</item>
+        <item>Lession 29</item>
+        <item>Lession 30</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    <string name="title_activity_excrecise">ExcreciseActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_lesson">LessonActivity</string>
+    <string name="first_test">Choose the synonym.</string>
+    <string name="second_test">Choose the word or phrase that is closest in meaning to the underlined word or phrase.</string>
+
+    <color name="light_blue">#B2ECFF</color>
+    <color name="main_theme_background">#E6F9FF</color>
+    <color name="dark_blue">#3399FF</color>
+    <color name="light_gray">#D8DFE6</color>
+    <color name="light_yellow">#FFECCB</color>
+    <color name="black">#000000</color>
+    <color name="dark_grey">#606060</color>
+    <color name="white">#FFFFFF</color>
+    <color name="purple">#800080</color>
+    <color name="green">#00FF00</color>
+    <color name="red">#FF0000</color>
+    <color name="light_green">#C8F6C8</color>
+    <color name="dark_green">#006400</color>
+
+    <string name="title_activity_enterance">Essential Words</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_leitner">LeitnerActivity</string>
+
+</resources>

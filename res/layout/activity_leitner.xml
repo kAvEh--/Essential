@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kAvEh.essentialwords.LeitnerActivity" >
+
+    <ImageButton
+        android:id="@+id/leitner_next"
+        android:layout_width="35dp"
+        android:layout_height="55dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-6dp"
+        android:layout_marginRight="0dp"
+        android:background="@null"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/right" />
+
+    <ImageButton
+        android:id="@+id/leitner_prev"
+        android:layout_width="35dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="-6dp"
+        android:background="@null"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/left"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/leitner_footer"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="5" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:weightSum="10" >
+
+                <ImageView
+                    android:id="@+id/footer_blue_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/fill_leitner" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/leitner" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/footer_percent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:onClick="shareWord"
+            android:scaleType="centerInside"
+            android:src="@drawable/share" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frontFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/leitner_footer"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_toLeftOf="@id/leitner_next"
+        android:layout_toRightOf="@id/leitner_prev" />
+
+</RelativeLayout>

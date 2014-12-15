@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/end" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:baselineAligned="false"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:weightSum="20" >
+
+        <RelativeLayout
+            android:id="@+id/lesson_list_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8" >
+
+            <TextView
+                android:id="@+id/list_heder_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="6dp"
+                android:paddingTop="10dp"
+                android:textColor="#793D1A"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/list_header_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/list_heder_title"
+                android:background="@drawable/hline" />
+
+            <ImageView
+                android:id="@+id/lesson_stat_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_header_line"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/leitnerb" />
+
+            <TextView
+                android:id="@+id/lesson_stat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_header_line"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="15dp" />
+
+            <Button
+                android:id="@+id/lesson_excer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/lesson_stat"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:text="Excercise"
+                android:textColor="#793D1A" />
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="150dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/vline" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lesson_list_body"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" >
+
+            <TextView
+                android:id="@+id/list_example_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="5dp"
+                android:paddingRight="6dp"
+                android:paddingTop="10dp"
+                android:text="Examples :"
+                android:textColor="#793D1A"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/list_example_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_example_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/list_example_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_example_1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/list_example_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list_example_2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/list_example_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="more"
+                android:textColor="#793D1A"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

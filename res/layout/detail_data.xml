@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="11dp"
+    android:paddingRight="11dp"
+    android:paddingTop="15dp" >
+
+    <RelativeLayout
+        android:id="@+id/detail_list_header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/light_blue" >
+
+        <ImageView
+            android:id="@+id/prev_answer"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/detail_header_word"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/prev_answer"
+            android:gravity="center_vertical"
+            android:paddingLeft="6dp"
+            android:textIsSelectable="true"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/detail_header_line"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/purple" />
+        
+        <ImageView
+            android:id="@+id/detail_header_speek"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/detail_header_line"
+            android:padding="2dp"
+            android:paddingRight="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_tts" />
+
+        <ImageView
+            android:id="@+id/detail_header_star"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/detail_header_speek"
+            android:padding="2dp"
+            android:paddingRight="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_star_off" />
+
+        <ImageView
+            android:id="@+id/detail_header_share"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/detail_header_star"
+            android:padding="2dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_social_share" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/detail_list_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp" >
+
+            <RelativeLayout
+                android:id="@+id/detail_word_firstpart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/detail_word_adv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+                <ImageView
+                    android:id="@+id/detail_seprator1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/detail_word_adv"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/detail_word_syn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/detail_seprator1"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/detail_seprator2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/detail_word_syn"
+                    android:background="@color/white" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/detail_word_sent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_word_firstpart"
+                android:layout_marginLeft="5dp"
+                android:textIsSelectable="true"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/detail_list_trans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_yellow"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/detail_trans_loadtrans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/apptheme_btn_default_holo_light"
+                android:text="ترجمه" />
+
+            <TextView
+                android:id="@+id/detail_word_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/detail_trans_loadtrans"
+                android:paddingRight="3dp"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/show_know_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray" >
+
+        <RelativeLayout
+            android:id="@+id/know_it"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/light_green" >
+
+            <ImageView
+                android:id="@+id/know_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_navigation_accept" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/know_icon"
+                android:padding="8dp"
+                android:text="Know It"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/show_it"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+            
+            <ImageView
+                android:id="@+id/show_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_navigation_cancel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_toRightOf="@id/show_icon"
+                android:text="Show It"
+                android:textSize="18sp" />
+
+            
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        android:background="@drawable/backbg" />
+
+    <RelativeLayout
+        android:id="@+id/card_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp" >
+
+        <TextView
+            android:id="@+id/number_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="15dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/lesson_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="15dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/card_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="17pt" />
+
+        <ImageButton
+            android:id="@+id/card_voice"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_below="@id/card_word"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:onClick="speech"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_tts" />
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/card_flip"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:onClick="flipCard"
+        android:scaleType="centerInside"
+        android:src="@drawable/flip" />
+
+</RelativeLayout>
