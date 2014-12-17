@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -56,6 +58,11 @@ public class ExcerciseActivity extends Activity {
 	RelativeLayout exc_b_layout;
 	RelativeLayout exc_c_layout;
 	RelativeLayout exc_d_layout;
+	ImageButton answer;
+
+	boolean auto_next = false;
+
+	private Handler mHandler = new Handler();
 
 	@SuppressLint("NewApi")
 	@Override
@@ -125,6 +132,7 @@ public class ExcerciseActivity extends Activity {
 		exc_b_layout = (RelativeLayout) findViewById(R.id.excer_b_layout);
 		exc_c_layout = (RelativeLayout) findViewById(R.id.excer_c_layout);
 		exc_d_layout = (RelativeLayout) findViewById(R.id.excer_d_layout);
+		answer = (ImageButton) findViewById(R.id.excer_answer);
 
 		// --- load Datas
 		header.setText("Lesson " + (lesson_num + 1));
@@ -168,6 +176,7 @@ public class ExcerciseActivity extends Activity {
 				exc.get(excer_num).setState("A");
 				if (exc.get(excer_num).getAnswer().equals("A")) {
 					exc_a_layout.setBackgroundResource(R.drawable.exc_correct);
+					autoShift();
 				} else {
 					exc_a_layout.setBackgroundResource(R.drawable.exc_error);
 				}
@@ -184,6 +193,7 @@ public class ExcerciseActivity extends Activity {
 				exc.get(excer_num).setState("B");
 				if (exc.get(excer_num).getAnswer().equals("B")) {
 					exc_b_layout.setBackgroundResource(R.drawable.exc_correct);
+					autoShift();
 				} else {
 					exc_b_layout.setBackgroundResource(R.drawable.exc_error);
 				}
@@ -200,6 +210,7 @@ public class ExcerciseActivity extends Activity {
 				exc.get(excer_num).setState("C");
 				if (exc.get(excer_num).getAnswer().equals("C")) {
 					exc_c_layout.setBackgroundResource(R.drawable.exc_correct);
+					autoShift();
 				} else {
 					exc_c_layout.setBackgroundResource(R.drawable.exc_error);
 				}
@@ -216,14 +227,50 @@ public class ExcerciseActivity extends Activity {
 				exc.get(excer_num).setState("D");
 				if (exc.get(excer_num).getAnswer().equals("D")) {
 					exc_d_layout.setBackgroundResource(R.drawable.exc_correct);
+					autoShift();
 				} else {
 					exc_d_layout.setBackgroundResource(R.drawable.exc_error);
 				}
 			}
 		});
+
+		answer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String ans = exc.get(excer_num).getAnswer();
+				if (ans.equals("A"))
+					exc_a_layout.setBackgroundResource(R.drawable.exc_correct);
+				else if (ans.equals("B"))
+					exc_b_layout.setBackgroundResource(R.drawable.exc_correct);
+				else if (ans.equals("C"))
+					exc_c_layout.setBackgroundResource(R.drawable.exc_correct);
+				else
+					exc_d_layout.setBackgroundResource(R.drawable.exc_correct);
+
+				autoShift();
+			}
+		});
+	}
+
+	private void autoShift() {
+		auto_next = true;
+		mHandler.postDelayed(new Runnable() {
+			public void run() {
+				if (auto_next) {
+					if (excer_num == 14)
+						excer_num = 0;
+					else
+						excer_num += 1;
+
+					setExcercise(excer_num);
+				}
+			}
+		}, 800);
 	}
 
 	private void setExcercise(int _num) {
+		auto_next = false;
 		if (exc.get(_num).getType().equals("matching")) {
 			exc_question_type.setText(this.getResources().getString(
 					R.string.first_test));

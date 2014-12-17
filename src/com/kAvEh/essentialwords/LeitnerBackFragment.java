@@ -20,6 +20,7 @@ public class LeitnerBackFragment extends Fragment {
 	String _part2;
 	String _example;
 	String _trans;
+	boolean _reset;
 
 	TextView word;
 	TextView part1;
@@ -27,6 +28,7 @@ public class LeitnerBackFragment extends Fragment {
 	TextView example;
 	ImageButton loadTrans;
 	TextView trans;
+	ImageButton reset;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +44,9 @@ public class LeitnerBackFragment extends Fragment {
 		example = (TextView) view.findViewById(R.id.back_example);
 		loadTrans = (ImageButton) view.findViewById(R.id.back_loadtrans);
 		loadTrans.setOnClickListener(loadTransListener);
+		reset = (ImageButton) view.findViewById(R.id.card_x);
+		if (!_reset)
+			reset.setVisibility(View.INVISIBLE);
 		trans = (TextView) view.findViewById(R.id.back_trans);
 		trans.setText(_trans);
 		String text = _example;
@@ -76,5 +81,9 @@ public class LeitnerBackFragment extends Fragment {
 		this._part2 = part2;
 		this._example = example;
 		this._trans = trans;
+	}
+	
+	public void setReset(boolean b) {
+		this._reset = b;
 	}
 }

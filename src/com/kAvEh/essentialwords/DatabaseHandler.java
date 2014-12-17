@@ -18,11 +18,11 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 	// All Static variables
 	// Database Version
 	// TODO
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 
 	// Database Name
 	// TODO
-	private static final String DATABASE_NAME = "WordsDBV6";
+	private static final String DATABASE_NAME = "WordsDBV7";
 
 	// Location table name
 	private static final String TABLE_LESSON = "lesson";

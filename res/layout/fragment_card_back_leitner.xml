@@ -150,13 +150,23 @@
         android:onClick="flipCardBack"
         android:scaleType="centerInside"
         android:src="@drawable/flip" />
+    <ImageButton
+        android:id="@+id/card_x"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:onClick="resetCard"
+        android:scaleType="centerInside"
+        android:src="@drawable/cross" />
 
     <ImageButton
         android:id="@+id/card_know"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:background="@null"
         android:onClick="levelUp"
         android:scaleType="centerInside"

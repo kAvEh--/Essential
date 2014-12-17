@@ -73,6 +73,7 @@ public class LessonActivity extends Activity implements
 
 		Intent i = getIntent();
 		mLesson = i.getIntExtra("Num", 1);
+		int toWord = i.getIntExtra("Word", 0);
 
 		tts = new TextToSpeech(this, this);
 
@@ -123,7 +124,6 @@ public class LessonActivity extends Activity implements
 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 		words = db.getLesson(mLesson);
 		db.close();
-		indicator = 0;
 
 		_word = (TextView) findViewById(R.id.card_word);
 		_speek = (ImageButton) findViewById(R.id.card_voice);
@@ -146,6 +146,18 @@ public class LessonActivity extends Activity implements
 		});
 
 		// show first card ---------------------
+		if (toWord > 0 && toWord < 16)
+			indicator = toWord - 1;
+		else
+			indicator = 0;
+		if (indicator < words.size() - 1)
+			next.setVisibility(View.VISIBLE);
+		else
+			next.setVisibility(View.INVISIBLE);
+		if (indicator > 0)
+			prev.setVisibility(View.VISIBLE);
+		else
+			prev.setVisibility(View.INVISIBLE);
 		front_fr = new FrontCardFragment();
 		back_fr = new BackCardFragment();
 
@@ -167,6 +179,7 @@ public class LessonActivity extends Activity implements
 	private void setLeitner() {
 		final ImageView bar = (ImageView) findViewById(R.id.footer_blue_bar);
 		final TextView text = (TextView) findViewById(R.id.footer_percent);
+		text.setBackgroundResource(0);
 		text.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -182,6 +195,7 @@ public class LessonActivity extends Activity implements
 							LayoutParams.WRAP_CONTENT,
 							LayoutParams.MATCH_PARENT, .5f));
 					text.setText("0 %");
+					text.setBackgroundResource(0);
 				}
 			}
 		});
@@ -189,7 +203,8 @@ public class LessonActivity extends Activity implements
 		switch (_w.getLeitnerStage()) {
 		case 0: {
 			percent = 0;
-			text.setText("Add To Leitner");
+			text.setText("");
+			text.setBackgroundResource(R.drawable.add);
 		}
 			break;
 		case 1: {

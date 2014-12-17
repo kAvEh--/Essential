@@ -1,8 +1,9 @@
 package com.kAvEh.essentialwords;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,11 @@ import android.widget.TextView;
 
 public class LessonAdapter extends BaseAdapter {
 
-	private Activity activity;
+	private FragmentActivity activity;
 	private String[][] word_lists;
 	private int[][] word_data;
 
-	public LessonAdapter(Activity a, String[][] b, int[][] l) {
+	public LessonAdapter(FragmentActivity a, String[][] b, int[][] l) {
 		activity = a;
 		word_lists = b;
 		word_data = l;
@@ -55,6 +56,7 @@ public class LessonAdapter extends BaseAdapter {
 		TextView l_3;
 		TextView l_4;
 		TextView l_5;
+		TextView more;
 	}
 
 	@SuppressLint("InflateParams")
@@ -82,6 +84,8 @@ public class LessonAdapter extends BaseAdapter {
 			viewHolder.l_4 = (TextView) vi.findViewById(R.id.list_leitner_4);
 			viewHolder.l_5 = (TextView) vi.findViewById(R.id.list_leitner_5);
 			viewHolder.header.setOnClickListener(mHeaderClickListener);
+			viewHolder.more = (TextView) vi.findViewById(R.id.list_example_more);
+			viewHolder.more.setOnClickListener(moreClickListener);
 			vi.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) vi.getTag();
@@ -114,6 +118,7 @@ public class LessonAdapter extends BaseAdapter {
 
 		viewHolder.excer.setTag(position);
 		viewHolder.header.setTag(position);
+		viewHolder.more.setTag(position);
 
 		return vi;
 	}
@@ -135,6 +140,17 @@ public class LessonAdapter extends BaseAdapter {
 			Intent i = new Intent(activity, LessonActivity.class);
 			i.putExtra("Num", position + 1);
 			activity.startActivity(i);
+		}
+	};
+	
+	private View.OnClickListener moreClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			int position = (Integer) v.getTag();
+			ShowCardFragment fr = new ShowCardFragment();
+			fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+			fr.setlesson(position + 1);
+			fr.show(activity.getSupportFragmentManager(), "Hello");
 		}
 	};
 

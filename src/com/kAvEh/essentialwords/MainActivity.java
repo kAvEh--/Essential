@@ -5,13 +5,13 @@ import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -101,6 +101,7 @@ public class MainActivity extends Activity {
 				startActivity(i);
 			}
 		});
+
 	}
 
 	private void initialize() {

@@ -223,12 +223,13 @@ public class LeitnerActivity extends Activity implements
 
 	@SuppressLint("NewApi")
 	public void flipCard(View v) {
-		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-		db.setLeitner(_w.getID(), 1, 1);
-		db.close();
 		back_fr = new LeitnerBackFragment();
 		back_fr.setWordBack(_w.getWord(), _w.getpart1(), _w.getPart2(),
 				_w.getExample(), _w.getTrans());
+		if (_w.getLeitnerStage() == 1)
+			back_fr.setReset(false);
+		else
+			back_fr.setReset(true);
 		ft = fm.beginTransaction();
 		ft.setCustomAnimations(R.animator.card_flip_right_in,
 				R.animator.card_flip_right_out, R.animator.card_flip_left_in,
@@ -252,6 +253,13 @@ public class LeitnerActivity extends Activity implements
 				R.animator.card_flip_left_out).replace(R.id.frontFragment,
 				front_fr);
 		ft.commit();
+	}
+
+	public void resetCard(View v) {
+		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+		db.setLeitner(_w.getID(), 1, 1);
+		db.close();
+		updateStage();
 	}
 
 	public void levelUp(View v) {
