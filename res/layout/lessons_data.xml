@@ -43,34 +43,73 @@
                 android:layout_below="@id/list_heder_title"
                 android:background="@drawable/hline" />
 
-            <ImageView
-                android:id="@+id/lesson_stat_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/list_header_line"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginTop="15dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/leitnerb" />
-
-            <TextView
-                android:id="@+id/lesson_stat"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/list_header_line"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="7dp"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="28dp"
+                android:orientation="horizontal"
+                android:weightSum="10.1" >
+
+                <TextView
+                    android:id="@+id/list_leitner_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/list_leitner_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/list_leitner_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.3"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/list_leitner_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/list_leitner_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/lesson_stat_1"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_below="@id/list_header_line"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="25dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/leitnerb" />
 
             <Button
                 android:id="@+id/lesson_excer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/lesson_stat"
+                android:layout_below="@id/lesson_stat_1"
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@null"
                 android:text="Excercise"
                 android:textColor="#793D1A" />

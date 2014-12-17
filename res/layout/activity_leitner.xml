@@ -2,7 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ccc"
     tools:context="com.kAvEh.essentialwords.LeitnerActivity" >
+
+    <ImageView
+        android:id="@+id/bar1"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@drawable/bar1" />
+
+    <ImageView
+        android:id="@+id/bar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar1"
+        android:background="@drawable/bar2" />
 
     <ImageButton
         android:id="@+id/leitner_next"
@@ -85,14 +99,21 @@
             android:onClick="shareWord"
             android:scaleType="centerInside"
             android:src="@drawable/share" />
-
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bar3"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_above="@id/leitner_footer"
+        android:background="@drawable/bar3" />
 
     <FrameLayout
         android:id="@+id/frontFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/leitner_footer"
+        android:layout_above="@id/bar3"
+        android:layout_below="@id/bar2"
         android:layout_marginBottom="7dp"
         android:layout_marginTop="7dp"
         android:layout_toLeftOf="@id/leitner_next"

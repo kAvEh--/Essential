@@ -15,10 +15,20 @@ public class LessonAdapter extends BaseAdapter {
 
 	private Activity activity;
 	private String[][] word_lists;
+	private int[][] word_data;
 
-	public LessonAdapter(Activity a, String[][] b) {
+	public LessonAdapter(Activity a, String[][] b, int[][] l) {
 		activity = a;
 		word_lists = b;
+		word_data = l;
+	}
+
+	public void setListData(String[][] b) {
+		this.word_lists = b;
+	}
+
+	public void setListNum(int[][] b) {
+		this.word_data = b;
 	}
 
 	public int getCount() {
@@ -40,6 +50,11 @@ public class LessonAdapter extends BaseAdapter {
 		TextView ex_1;
 		TextView ex_2;
 		TextView ex_3;
+		TextView l_1;
+		TextView l_2;
+		TextView l_3;
+		TextView l_4;
+		TextView l_5;
 	}
 
 	@SuppressLint("InflateParams")
@@ -61,17 +76,44 @@ public class LessonAdapter extends BaseAdapter {
 			viewHolder.ex_1 = (TextView) vi.findViewById(R.id.list_example_1);
 			viewHolder.ex_2 = (TextView) vi.findViewById(R.id.list_example_2);
 			viewHolder.ex_3 = (TextView) vi.findViewById(R.id.list_example_3);
-			// viewHolder.header.setOnClickListener(mHeaderClickListener);
+			viewHolder.l_1 = (TextView) vi.findViewById(R.id.list_leitner_1);
+			viewHolder.l_2 = (TextView) vi.findViewById(R.id.list_leitner_2);
+			viewHolder.l_3 = (TextView) vi.findViewById(R.id.list_leitner_3);
+			viewHolder.l_4 = (TextView) vi.findViewById(R.id.list_leitner_4);
+			viewHolder.l_5 = (TextView) vi.findViewById(R.id.list_leitner_5);
+			viewHolder.header.setOnClickListener(mHeaderClickListener);
 			vi.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) vi.getTag();
 		}
 		viewHolder.lessonTitle.setText("Lesson    " + (position + 1));
-//		viewHolder.ex_1.setText(word_lists[position][0]);
-//		viewHolder.ex_2.setText(word_lists[position][1]);
-//		viewHolder.ex_3.setText(word_lists[position][2]);
+		viewHolder.ex_1.setText(word_lists[position][0]);
+		viewHolder.ex_2.setText(word_lists[position][1]);
+		viewHolder.ex_3.setText(word_lists[position][2]);
+
+		if (word_data[position][0] > 0)
+			viewHolder.l_1.setText(word_data[position][0] + "");
+		else
+			viewHolder.l_1.setText("-");
+		if (word_data[position][1] > 0)
+			viewHolder.l_2.setText(word_data[position][1] + "");
+		else
+			viewHolder.l_2.setText("-");
+		if (word_data[position][2] > 0)
+			viewHolder.l_3.setText(word_data[position][2] + "");
+		else
+			viewHolder.l_3.setText("-");
+		if (word_data[position][3] > 0)
+			viewHolder.l_4.setText(word_data[position][3] + "");
+		else
+			viewHolder.l_4.setText("-");
+		if (word_data[position][4] > 0)
+			viewHolder.l_5.setText(word_data[position][4] + "");
+		else
+			viewHolder.l_5.setText("-");
 
 		viewHolder.excer.setTag(position);
+		viewHolder.header.setTag(position);
 
 		return vi;
 	}
@@ -85,4 +127,15 @@ public class LessonAdapter extends BaseAdapter {
 			activity.startActivity(i);
 		}
 	};
+
+	private View.OnClickListener mHeaderClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			int position = (Integer) v.getTag();
+			Intent i = new Intent(activity, LessonActivity.class);
+			i.putExtra("Num", position + 1);
+			activity.startActivity(i);
+		}
+	};
+
 }

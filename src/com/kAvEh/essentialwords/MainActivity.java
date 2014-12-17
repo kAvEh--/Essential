@@ -1,12 +1,14 @@
 package com.kAvEh.essentialwords;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -88,7 +90,7 @@ public class MainActivity extends Activity {
 		}
 		// ListView ----------
 		lv = (ListView) findViewById(R.id.lession_list);
-		initialize();
+		new ShowListTask().execute();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -102,18 +104,19 @@ public class MainActivity extends Activity {
 	}
 
 	private void initialize() {
-		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-		ArrayList<Word> list;
-		String[][] temp = new String[30][3];
-		for (int i = 0; i < 30; i++) {
-			list = db.getLesson(i + 1);
-			temp[i][0] = list.get(0).getWord();
-			temp[i][1] = list.get(1).getWord();
-			temp[i][2] = list.get(2).getWord();
-		}
-		db.close();
-		LessonAdapter adapter = new LessonAdapter(MainActivity.this, temp);
-		lv.setAdapter(adapter);
+		// DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+		// ArrayList<Word> list;
+		// String[][] temp = new String[30][3];
+		// for (int i = 0; i < 30; i++) {
+		// list = db.getLesson(i + 1);
+		// temp[i][0] = list.get(0).getWord();
+		// temp[i][1] = list.get(1).getWord();
+		// temp[i][2] = list.get(2).getWord();
+		// }
+		// db.close();
+		// LessonAdapter adapter = new LessonAdapter(MainActivity.this, temp);
+		// lv.setAdapter(adapter);
+		new ShowListTask().execute();
 	}
 
 	@Override
@@ -183,7 +186,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void selectItem(int position) {
-		Intent i = new Intent(MainActivity.this, LessonActivity.class);
+		Intent i = new Intent(MainActivity.this, ExcerciseActivity.class);
 		i.putExtra("Num", position + 1);
 		startActivity(i);
 	}
@@ -211,5 +214,83 @@ public class MainActivity extends Activity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	private class ShowListTask extends
+			AsyncTask<Void, HashMap<String, Integer>, Void> {
+
+		ListView lv;
+		String[][] word_lists;
+		int[][] word_data;
+		LessonAdapter adapter;
+
+		@Override
+		protected void onPostExecute(Void unused) {
+			// stop the loading animation or something
+		}
+
+		@Override
+		protected void onPreExecute() {
+			lv = (ListView) findViewById(R.id.lession_list);
+			word_lists = new String[30][3];
+			word_data = new int[30][5];
+			adapter = new LessonAdapter(MainActivity.this, word_lists, word_data);
+			lv.setAdapter(adapter);
+		}
+
+		@SuppressWarnings({ "unchecked" })
+		@Override
+		protected Void doInBackground(Void... params) {
+			DatabaseHandler db;
+			ArrayList<Word> list;
+			HashMap<String, Integer> temp;
+			int[] leitner;
+			for (int i = 0; i < 30; i++) {
+				db = new DatabaseHandler(getApplicationContext());
+				list = db.getLesson(i + 1);
+				db.close();
+				temp = new HashMap<String, Integer>();
+				leitner = new int[5];
+				for (int j = 0; j < list.size(); j++) {
+					switch (list.get(j).getLeitnerStage()) {
+					case 1:
+						leitner[0]++;
+						break;
+					case 2:
+						leitner[1]++;
+						break;
+					case 3:
+						leitner[2]++;
+						break;
+					case 4:
+						leitner[3]++;
+						break;
+					case 5:
+						leitner[4]++;
+						break;
+					default:
+						break;
+					}
+				}
+				word_lists[i][0] = list.get(0).getWord();
+				word_lists[i][1] = list.get(1).getWord();
+				word_lists[i][2] = list.get(2).getWord();
+				adapter.setListData(word_lists);
+				word_data[i][0] = leitner[0];
+				word_data[i][1] = leitner[1];
+				word_data[i][2] = leitner[2];
+				word_data[i][3] = leitner[3];
+				word_data[i][4] = leitner[4];
+				adapter.setListNum(word_data);
+				publishProgress(temp);
+			}
+
+			return (null);
+		}
+
+		@Override
+		protected void onProgressUpdate(HashMap<String, Integer>... items) {
+			adapter.notifyDataSetChanged();
+		}
 	}
 }

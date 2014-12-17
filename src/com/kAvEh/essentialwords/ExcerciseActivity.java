@@ -56,7 +56,6 @@ public class ExcerciseActivity extends Activity {
 	RelativeLayout exc_b_layout;
 	RelativeLayout exc_c_layout;
 	RelativeLayout exc_d_layout;
-	ImageView prev_answer;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -133,28 +132,7 @@ public class ExcerciseActivity extends Activity {
 		exc = db.getExcercise(lesson_num + 1);
 		ImageView excer_next = (ImageView) findViewById(R.id.excer_next);
 		ImageView excer_prev = (ImageView) findViewById(R.id.excer_prev);
-		ImageView correct = (ImageView) findViewById(R.id.show_correct);
-		prev_answer = (ImageView) findViewById(R.id.prev_answer);
 		setExcercise(excer_num);
-		correct.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (exc.get(excer_num).getAnswer().equals("A")) {
-					exc_a_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-				} else if (exc.get(excer_num).getAnswer().equals("B")) {
-					exc_b_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-				} else if (exc.get(excer_num).getAnswer().equals("C")) {
-					exc_c_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-				} else {
-					exc_d_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-				}
-			}
-		});
 		excer_next.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -189,15 +167,9 @@ public class ExcerciseActivity extends Activity {
 				db.close();
 				exc.get(excer_num).setState("A");
 				if (exc.get(excer_num).getAnswer().equals("A")) {
-					exc_a_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_accept));
+					exc_a_layout.setBackgroundResource(R.drawable.exc_correct);
 				} else {
-					exc_a_layout.setBackgroundColor(getResources().getColor(
-							R.color.red));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_cancel));
+					exc_a_layout.setBackgroundResource(R.drawable.exc_error);
 				}
 			}
 		});
@@ -211,15 +183,9 @@ public class ExcerciseActivity extends Activity {
 				db.close();
 				exc.get(excer_num).setState("B");
 				if (exc.get(excer_num).getAnswer().equals("B")) {
-					exc_b_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_accept));
+					exc_b_layout.setBackgroundResource(R.drawable.exc_correct);
 				} else {
-					exc_b_layout.setBackgroundColor(getResources().getColor(
-							R.color.red));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_cancel));
+					exc_b_layout.setBackgroundResource(R.drawable.exc_error);
 				}
 			}
 		});
@@ -233,15 +199,9 @@ public class ExcerciseActivity extends Activity {
 				db.close();
 				exc.get(excer_num).setState("C");
 				if (exc.get(excer_num).getAnswer().equals("C")) {
-					exc_c_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_accept));
+					exc_c_layout.setBackgroundResource(R.drawable.exc_correct);
 				} else {
-					exc_c_layout.setBackgroundColor(getResources().getColor(
-							R.color.red));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_cancel));
+					exc_c_layout.setBackgroundResource(R.drawable.exc_error);
 				}
 			}
 		});
@@ -255,15 +215,9 @@ public class ExcerciseActivity extends Activity {
 				db.close();
 				exc.get(excer_num).setState("D");
 				if (exc.get(excer_num).getAnswer().equals("D")) {
-					exc_d_layout.setBackgroundColor(getResources().getColor(
-							R.color.green));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_accept));
+					exc_d_layout.setBackgroundResource(R.drawable.exc_correct);
 				} else {
-					exc_d_layout.setBackgroundColor(getResources().getColor(
-							R.color.red));
-					prev_answer.setVisibility(View.VISIBLE);
-					prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_cancel));
+					exc_d_layout.setBackgroundResource(R.drawable.exc_error);
 				}
 			}
 		});
@@ -288,30 +242,15 @@ public class ExcerciseActivity extends Activity {
 			exc_question.setText(spannable);
 		}
 
-		if (exc.get(_num).getState().equals("n")) {
-			prev_answer.setVisibility(View.INVISIBLE);
-		} else {
-			if (exc.get(_num).getState().equals(exc.get(_num).getAnswer())) {
-				prev_answer.setVisibility(View.VISIBLE);
-				prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_accept));
-			} else {
-				prev_answer.setVisibility(View.VISIBLE);
-				prev_answer.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation_cancel));
-			}
-		} 
 		exc_num.setText(String.valueOf(_num + 1) + " / 15");
 		exc_a.setText(exc.get(_num).getA());
 		exc_b.setText(exc.get(_num).getB());
 		exc_c.setText(exc.get(_num).getC());
 		exc_d.setText(exc.get(_num).getD());
-		exc_a_layout.setBackgroundColor(getResources().getColor(
-				R.color.light_yellow));
-		exc_b_layout.setBackgroundColor(getResources().getColor(
-				R.color.light_yellow));
-		exc_c_layout.setBackgroundColor(getResources().getColor(
-				R.color.light_yellow));
-		exc_d_layout.setBackgroundColor(getResources().getColor(
-				R.color.light_yellow));
+		exc_a_layout.setBackgroundResource(R.drawable.exc_default);
+		exc_b_layout.setBackgroundResource(R.drawable.exc_default);
+		exc_c_layout.setBackgroundResource(R.drawable.exc_default);
+		exc_d_layout.setBackgroundResource(R.drawable.exc_default);
 	}
 
 	@SuppressLint("NewApi")

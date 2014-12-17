@@ -11,184 +11,188 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/excer_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/main_theme_background"
+        android:paddingBottom="11dp" >
 
-        <RelativeLayout
-            android:id="@+id/excer_main"
+        <TextView
+            android:id="@+id/excer_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/main_theme_background"
-            android:paddingBottom="11dp" >
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/excer_header"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/light_blue"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/excer_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/excer_header"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/clear"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/excer_header"
-                android:background="@color/white" />
+        <ImageView
+            android:id="@+id/excer_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/excer_header"
+            android:src="@drawable/right" />
 
-            <RelativeLayout
-                android:id="@+id/excer_num_lay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/clear"
-                android:layout_marginBottom="7dp"
-                android:background="@color/light_gray" >
+        <ImageView
+            android:id="@+id/excer_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/excer_header"
+            android:src="@drawable/left" />
 
-                <TextView
-                    android:id="@+id/excer_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/excer_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_navigation_next_item" />
-
-                <ImageView
-                    android:id="@+id/excer_prev"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/ic_navigation_previous_item" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/excer_question_general"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/excer_num_lay"
-                android:layout_marginBottom="7dp"
-                android:gravity="center_horizontal"
-                android:textIsSelectable="true"
-                android:textSize="15sp" />
-
-            <RelativeLayout
-                android:id="@+id/excer_question_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/excer_question_general"
-                android:layout_margin="11dp"
-                android:background="@color/light_blue" >
-
-                <ImageView
-                    android:id="@+id/show_correct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_action_help" />
-
-                <ImageView
-                    android:id="@+id/prev_answer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true" />
-
-                <TextView
-                    android:id="@+id/excer_question"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_toLeftOf="@id/show_correct"
-                    android:layout_toRightOf="@id/prev_answer"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    android:textIsSelectable="true"
-                    android:textSize="17sp" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/excer_num" >
 
             <ImageView
-                android:id="@+id/clear2"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/excer_question_layout"
-                android:background="@color/black" />
+                android:layout_height="match_parent"
+                android:background="@drawable/backbg" />
 
-            <RelativeLayout
-                android:id="@+id/excer_a_layout"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/clear2"
-                android:layout_margin="11dp"
-                android:background="@color/light_yellow"
-                android:gravity="center_horizontal" >
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
-                <TextView
-                    android:id="@+id/excer_a"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-            <RelativeLayout
-                android:id="@+id/excer_b_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/excer_a_layout"
-                android:layout_margin="11dp"
-                android:background="@color/light_yellow"
-                android:gravity="center_horizontal" >
+                    <TextView
+                        android:id="@+id/excer_question_general"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_horizontal"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/excer_b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/hline1"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_below="@+id/excer_question_general"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/hline_ex1" />
 
-            <RelativeLayout
-                android:id="@+id/excer_c_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/excer_b_layout"
-                android:layout_margin="11dp"
-                android:background="@color/light_yellow"
-                android:gravity="center_horizontal" >
+                    <TextView
+                        android:id="@+id/excer_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/hline1"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp"
+                        android:textIsSelectable="true"
+                        android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/excer_c"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/clear2"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_below="@id/excer_question"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/hline_ex2" />
 
-            <RelativeLayout
-                android:id="@+id/excer_d_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/excer_c_layout"
-                android:layout_margin="11dp"
-                android:background="@color/light_yellow"
-                android:gravity="center_horizontal" >
+                    <RelativeLayout
+                        android:id="@+id/excer_a_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/clear2"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal" >
 
-                <TextView
-                    android:id="@+id/excer_d"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18sp" />
-            </RelativeLayout>
+                        <TextView
+                            android:id="@+id/excer_a"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/excer_b_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/excer_a_layout"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal" >
+
+                        <TextView
+                            android:id="@+id/excer_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/excer_c_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/excer_b_layout"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal" >
+
+                        <TextView
+                            android:id="@+id/excer_c"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/excer_d_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/excer_c_layout"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="11dp"
+                        android:gravity="center_horizontal" >
+
+                        <TextView
+                            android:id="@+id/excer_d"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </ScrollView>
         </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/left_drawer"

@@ -9,8 +9,14 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@drawable/bar_" />
+        android:layout_height="15dp"
+        android:background="@drawable/bar1" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bar2"
+        android:scaleType="centerInside" />
 
     <RelativeLayout
         android:layout_width="match_parent"
