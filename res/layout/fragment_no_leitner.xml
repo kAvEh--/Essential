@@ -23,7 +23,7 @@
             android:background="@null"
             android:onClick="generateword"
             android:scaleType="centerInside"
-            android:src="@drawable/adddto" />
+            android:src="@drawable/addleitner" />
     </LinearLayout>
 
 </RelativeLayout>

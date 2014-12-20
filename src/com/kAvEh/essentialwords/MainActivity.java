@@ -105,18 +105,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initialize() {
-		// DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-		// ArrayList<Word> list;
-		// String[][] temp = new String[30][3];
-		// for (int i = 0; i < 30; i++) {
-		// list = db.getLesson(i + 1);
-		// temp[i][0] = list.get(0).getWord();
-		// temp[i][1] = list.get(1).getWord();
-		// temp[i][2] = list.get(2).getWord();
-		// }
-		// db.close();
-		// LessonAdapter adapter = new LessonAdapter(MainActivity.this, temp);
-		// lv.setAdapter(adapter);
 		new ShowListTask().execute();
 	}
 

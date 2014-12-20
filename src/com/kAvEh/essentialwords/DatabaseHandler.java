@@ -121,22 +121,9 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 		db.close();
 
 	}
-
-	/*
-	 * public Item getItem(String id) { SQLiteDatabase db =
-	 * this.getReadableDatabase(); String selectQuery = "SELECT * FROM " +
-	 * TABLE_ITEM + " WHERE " + KEY_ID + " = '" + id + "';"; Cursor cursor =
-	 * db.rawQuery(selectQuery, null); Item item = null; if
-	 * (cursor.moveToFirst()) { item = new Item(cursor.getString(0),
-	 * cursor.getString(1), cursor.getString(2), cursor.getString(3),
-	 * cursor.getString(4), cursor.getString(5), cursor.getString(6),
-	 * cursor.getString(7), cursor.getString(8), cursor.getString(9)); } //
-	 * return cursor.close(); db.close(); return item; }
-	 */
-	public int[] getAllStar() {
-		int[] starList = new int[30];
-		// Select All Query
-		String selectQuery = "SELECT star FROM " + TABLE_LESSON + ";";
+	
+	public int getLessonNum() {
+		String selectQuery = "SELECT * FROM " + TABLE_LESSON + ";";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -145,14 +132,17 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 		int i = 0;
 		if (cursor.moveToFirst()) {
 			do {
-				starList[i] = cursor.getInt(0);
 				i++;
 			} while (cursor.moveToNext());
 		}
 		// return contact list
 		cursor.close();
 		db.close();
-		return starList;
+		return i;
+	}
+	
+	public void addLesson() {
+		
 	}
 
 	public int[] getCorrects(int lesson) {

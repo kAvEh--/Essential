@@ -37,7 +37,7 @@ public class LessonListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView tv = new TextView(mContext);
         tv.setText(word[position]);
-        tv.setBackgroundResource(R.drawable.bgg);
+        tv.setBackgroundResource(R.drawable.bg3);
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(19);
         return tv;
