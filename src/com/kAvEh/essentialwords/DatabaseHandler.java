@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,11 +19,11 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 	// All Static variables
 	// Database Version
 	// TODO
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	// Database Name
 	// TODO
-	private static final String DATABASE_NAME = "WordsDBV7";
+	private static final String DATABASE_NAME = "WordsDBV8";
 
 	// Location table name
 	private static final String TABLE_LESSON = "lesson";
@@ -47,6 +48,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 	private static final String KEY_ANSWER = "answer";
 	private static final String KEY_STATE = "state";
 	private static final String KEY_STAR = "star";
+	private static final String KEY_COUNT = "count";
 	private static final String KEY_L_STAGE = "leitner_stage";
 	private static final String KEY_L_PART = "leitner_part";
 	private static final String KEY_LAST_NUM_ADDED = "last_num_added";
@@ -68,14 +70,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 	}
 
 	// ---Item-------------------------------
-	/*
-	 * public void addWord(Word word) { SQLiteDatabase db =
-	 * this.getWritableDatabase(); ContentValues values = new ContentValues();
-	 * values.put(KEY_ID, word.getID());
-	 * 
-	 * db.insert(TABLE_LESSONS, null, values); db.close(); // Closing database
-	 * connection }
-	 */
 
 	public void starLesson(int id, int like) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -121,28 +115,57 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 		db.close();
 
 	}
-	
+
+	public void addWord(Word w) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_WORD, w.getWord());
+		values.put(KEY_PART2, w.getpart1());
+		values.put(KEY_TRANSLATION, w.getTrans());
+		values.put(KEY_L_STAGE, w.getLeitnerStage());
+		values.put(KEY_L_PART, w.getLeitnerPart());
+		values.put(KEY_LESSON, w.getLesson());
+
+		db.insert(TABLE_LESSONS, null, values);
+		String sql = "UPDATE " + TABLE_LESSON + " SET " + KEY_COUNT + " = "
+				+ KEY_COUNT + " + 1" + " WHERE " + KEY_ID + " = "
+				+ w.getLesson() + ";";
+		db.execSQL(sql);
+		db.close();
+	}
+
 	public int getLessonNum() {
-		String selectQuery = "SELECT * FROM " + TABLE_LESSON + ";";
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor mCount = db
+				.rawQuery("SELECT * FROM " + TABLE_LESSON, null);
+		mCount.moveToFirst();
+		int count = mCount.getCount();
+		mCount.close();
+		db.close();
+		return count;
+	}
+
+	public int getLessonToAdd() {
+		String selectQuery = "SELECT " + KEY_ID + " FROM " + TABLE_LESSON
+				+ " WHERE " + KEY_COUNT + " < 15;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
 
-		// looping through all rows and adding to list
-		int i = 0;
+		int ret;
 		if (cursor.moveToFirst()) {
-			do {
-				i++;
-			} while (cursor.moveToNext());
+			ret = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+		} else {
+			ContentValues values = new ContentValues();
+			values.put(KEY_COUNT, 0);
+
+			ret = (int) db.insert(TABLE_LESSON, null, values);
 		}
-		// return contact list
+
 		cursor.close();
 		db.close();
-		return i;
-	}
-	
-	public void addLesson() {
-		
+
+		return ret;
 	}
 
 	public int[] getCorrects(int lesson) {
@@ -205,18 +228,12 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 		return starList;
 	}
 
-	/*
-	 * public void deleteItem(String id) { SQLiteDatabase db =
-	 * this.getWritableDatabase(); db.delete(TABLE_ITEM, KEY_ID + " = ?", new
-	 * String[] { String.valueOf(id) }); db.close(); }
-	 */
 	public ArrayList<Word> getLesson(int num) {
 		ArrayList<Word> lesson = new ArrayList<Word>();
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(TABLE_LESSONS,
-				new String[] { KEY_ID, KEY_LESSON, KEY_WORD, KEY_PART1,
-						KEY_PART2, KEY_EXAMPLE, KEY_TRANSLATION, KEY_STAR,
-						KEY_STATE, KEY_L_STAGE, KEY_L_PART },
+		Cursor cursor = db.query(TABLE_LESSONS, new String[] { KEY_ID,
+				KEY_LESSON, KEY_WORD, KEY_PART1, KEY_PART2, KEY_EXAMPLE,
+				KEY_TRANSLATION, KEY_STAR, KEY_L_STAGE, KEY_L_PART },
 				KEY_LESSON + "=?", new String[] { String.valueOf(num) }, null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
@@ -229,8 +246,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 						.getColumnIndex(KEY_PART2)), cursor.getString(cursor
 						.getColumnIndex(KEY_EXAMPLE)), cursor.getString(cursor
 						.getColumnIndex(KEY_TRANSLATION)), cursor.getInt(cursor
-						.getColumnIndex(KEY_STAR)), cursor.getString(cursor
-						.getColumnIndex(KEY_STATE)), cursor.getInt(cursor
+						.getColumnIndex(KEY_STAR)), cursor.getInt(cursor
 						.getColumnIndex(KEY_L_STAGE)), cursor.getInt(cursor
 						.getColumnIndex(KEY_L_PART)));
 				lesson.add(word);
@@ -326,23 +342,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 
 		if (cursor.moveToFirst()) {
 			boolean flag = false;
-			System.out.println(today);
-			System.out.println(cursor.getString(cursor
-					.getColumnIndex(KEY_VISIT_STAGE2))
-					+ "---"
-					+ cursor.getInt(cursor.getColumnIndex(KEY_STAGE2_COUNT)));
-			System.out.println(cursor.getString(cursor
-					.getColumnIndex(KEY_VISIT_STAGE3))
-					+ "---"
-					+ cursor.getInt(cursor.getColumnIndex(KEY_STAGE3_COUNT)));
-			System.out.println(cursor.getString(cursor
-					.getColumnIndex(KEY_VISIT_STAGE4))
-					+ "---"
-					+ cursor.getInt(cursor.getColumnIndex(KEY_STAGE4_COUNT)));
-			System.out.println(cursor.getString(cursor
-					.getColumnIndex(KEY_VISIT_STAGE5))
-					+ "---"
-					+ cursor.getInt(cursor.getColumnIndex(KEY_STAGE5_COUNT)));
 
 			// Stage 2 Update
 			try {
@@ -353,7 +352,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 			} catch (Exception e) {
 				flag = false;
 			}
-			System.out.println(flag + "------2");
 			if (cursor.getInt(cursor.getColumnIndex(KEY_STAGE2_COUNT)) == 0
 					&& flag) {
 				String sql = "UPDATE " + TABLE_LESSONS + " SET " + KEY_L_PART
@@ -370,7 +368,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 			} catch (Exception e) {
 				flag = false;
 			}
-			System.out.println(flag + "------3");
 			if (cursor.getInt(cursor.getColumnIndex(KEY_STAGE3_COUNT)) == 0
 					&& flag) {
 				String sql;
@@ -390,7 +387,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 			} catch (Exception e) {
 				flag = false;
 			}
-			System.out.println(flag + "------4");
 			if (cursor.getInt(cursor.getColumnIndex(KEY_STAGE4_COUNT)) == 0
 					&& flag) {
 				String sql;
@@ -410,7 +406,6 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 			} catch (Exception e) {
 				flag = false;
 			}
-			System.out.println(flag + "------5");
 			if (cursor.getInt(cursor.getColumnIndex(KEY_STAGE5_COUNT)) == 0
 					&& flag) {
 				String sql;
@@ -521,8 +516,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 						cursor.getString(cursor.getColumnIndex(KEY_EXAMPLE)),
 						cursor.getString(cursor.getColumnIndex(KEY_TRANSLATION)),
 						cursor.getInt(cursor.getColumnIndex(KEY_STAR)), cursor
-								.getString(cursor.getColumnIndex(KEY_STATE)),
-						cursor.getInt(cursor.getColumnIndex(KEY_L_STAGE)),
+								.getInt(cursor.getColumnIndex(KEY_L_STAGE)),
 						cursor.getInt(cursor.getColumnIndex(KEY_L_PART)));
 				ret.add(w);
 			} while (cursor.moveToNext());

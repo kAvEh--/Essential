@@ -11,16 +11,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -32,7 +31,6 @@ public class MainActivity extends FragmentActivity {
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	private String[] mPlanetTitles;
 
 	private ListView lv;
 
@@ -43,7 +41,6 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		mTitle = mDrawerTitle = getTitle();
-		mPlanetTitles = getResources().getStringArray(R.array.lessions_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -52,8 +49,18 @@ public class MainActivity extends FragmentActivity {
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
 				GravityCompat.START);
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.drawer_list_item, mPlanetTitles));
+		String[] menu = new String[4];
+		menu[0] = "Add Word";
+		menu[1] = "Leitner";
+		menu[2] = "Help";
+		menu[3] = "About Us";
+		int[] icons = new int[4];
+		icons[0] = R.drawable.ic_share;
+		icons[1] = R.drawable.ic_share;
+		icons[2] = R.drawable.ic_share;
+		icons[3] = R.drawable.ic_share;
+		mDrawerList.setAdapter(new DrawerMenuAdapter(MainActivity.this, menu,
+				icons));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -116,8 +123,8 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.action_bar_main, menu);
+//		MenuInflater inflater = getMenuInflater();
+//		inflater.inflate(R.menu.action_bar_main, menu);
 		// Associate searchable configuration with the SearchView
 		// SearchManager searchManager = (SearchManager)
 		// getSystemService(Context.SEARCH_SERVICE);
@@ -170,14 +177,35 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			selectItem(position);
-		}
-	}
+			switch (position) {
+			case 0: {
+				DatabaseHandler db = new DatabaseHandler(
+						getApplicationContext());
+				int lesson = db.getLessonToAdd();
+				db.close();
+				AddNewWordFragment fr = new AddNewWordFragment();
+				fr.setLesson(lesson);
+				fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+				fr.show(getSupportFragmentManager(), "Hello");
+				initialize();
+			}
+				break;
 
-	private void selectItem(int position) {
-		Intent i = new Intent(MainActivity.this, ExcerciseActivity.class);
-		i.putExtra("Num", position + 1);
-		startActivity(i);
+			case 1: {
+				Intent i = new Intent(MainActivity.this, LeitnerActivity.class);
+				startActivity(i);
+			}
+				break;
+			case 2:
+
+				break;
+			case 3:
+
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -212,6 +240,7 @@ public class MainActivity extends FragmentActivity {
 		String[][] word_lists;
 		int[][] word_data;
 		LessonAdapter adapter;
+		int lesson_num;
 
 		@Override
 		protected void onPostExecute(Void unused) {
@@ -220,10 +249,14 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
+			DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+			lesson_num = db.getLessonNum();
+			db.close();
 			lv = (ListView) findViewById(R.id.lession_list);
-			word_lists = new String[30][3];
-			word_data = new int[30][5];
-			adapter = new LessonAdapter(MainActivity.this, word_lists, word_data);
+			word_lists = new String[lesson_num][3];
+			word_data = new int[lesson_num][5];
+			adapter = new LessonAdapter(MainActivity.this, word_lists,
+					word_data, lesson_num);
 			lv.setAdapter(adapter);
 		}
 
@@ -234,7 +267,7 @@ public class MainActivity extends FragmentActivity {
 			ArrayList<Word> list;
 			HashMap<String, Integer> temp;
 			int[] leitner;
-			for (int i = 0; i < 30; i++) {
+			for (int i = 0; i < lesson_num; i++) {
 				db = new DatabaseHandler(getApplicationContext());
 				list = db.getLesson(i + 1);
 				db.close();
@@ -262,8 +295,14 @@ public class MainActivity extends FragmentActivity {
 					}
 				}
 				word_lists[i][0] = list.get(0).getWord();
-				word_lists[i][1] = list.get(1).getWord();
-				word_lists[i][2] = list.get(2).getWord();
+				if (list.size() > 1)
+					word_lists[i][1] = list.get(1).getWord();
+				else
+					word_lists[i][1] = "-";
+				if (list.size() > 2)
+					word_lists[i][2] = list.get(2).getWord();
+				else
+					word_lists[i][2] = "-";
 				adapter.setListData(word_lists);
 				word_data[i][0] = leitner[0];
 				word_data[i][1] = leitner[1];

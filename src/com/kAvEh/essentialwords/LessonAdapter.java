@@ -17,11 +17,13 @@ public class LessonAdapter extends BaseAdapter {
 	private FragmentActivity activity;
 	private String[][] word_lists;
 	private int[][] word_data;
+	private int _count;
 
-	public LessonAdapter(FragmentActivity a, String[][] b, int[][] l) {
+	public LessonAdapter(FragmentActivity a, String[][] b, int[][] l, int c) {
 		activity = a;
 		word_lists = b;
 		word_data = l;
+		_count = c;
 	}
 
 	public void setListData(String[][] b) {
@@ -33,7 +35,7 @@ public class LessonAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return 30;
+		return _count;
 	}
 
 	public Object getItem(int position) {
@@ -84,7 +86,8 @@ public class LessonAdapter extends BaseAdapter {
 			viewHolder.l_4 = (TextView) vi.findViewById(R.id.list_leitner_4);
 			viewHolder.l_5 = (TextView) vi.findViewById(R.id.list_leitner_5);
 			viewHolder.header.setOnClickListener(mHeaderClickListener);
-			viewHolder.more = (TextView) vi.findViewById(R.id.list_example_more);
+			viewHolder.more = (TextView) vi
+					.findViewById(R.id.list_example_more);
 			viewHolder.more.setOnClickListener(moreClickListener);
 			vi.setTag(viewHolder);
 		} else {
@@ -116,6 +119,11 @@ public class LessonAdapter extends BaseAdapter {
 		else
 			viewHolder.l_5.setText("-");
 
+		if (position >= 30)
+			viewHolder.excer.setVisibility(View.GONE);
+		else
+			viewHolder.excer.setVisibility(View.VISIBLE);
+		
 		viewHolder.excer.setTag(position);
 		viewHolder.header.setTag(position);
 		viewHolder.more.setTag(position);
@@ -142,7 +150,7 @@ public class LessonAdapter extends BaseAdapter {
 			activity.startActivity(i);
 		}
 	};
-	
+
 	private View.OnClickListener moreClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {

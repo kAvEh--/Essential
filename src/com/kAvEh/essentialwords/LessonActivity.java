@@ -146,7 +146,7 @@ public class LessonActivity extends Activity implements
 		});
 
 		// show first card ---------------------
-		if (toWord > 0 && toWord < 16)
+		if (toWord > 0 && toWord <= words.size())
 			indicator = toWord - 1;
 		else
 			indicator = 0;

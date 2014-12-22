@@ -9,12 +9,11 @@ public class Word {
 	private String _example;
 	private String _trans;
 	private int _star;
-	private String _state;
 	private int _l_stage;
 	private int _l_part;
 
 	public Word(int id, int lesson, String word, String part1,
-			String part2, String example, String trans, int star, String state, int l_stage, int l_part) {
+			String part2, String example, String trans, int star, int l_stage, int l_part) {
 		this._id = id;
 		this._lesson = lesson;
 		this._word = word;
@@ -23,7 +22,6 @@ public class Word {
 		this._example = example;
 		this._trans = trans;
 		this._star = star;
-		this._state = state;
 		this._l_stage = l_stage;
 		this._l_part = l_part;
 	}
@@ -62,10 +60,6 @@ public class Word {
 	
 	public int getStar() {
 		return this._star;
-	}
-	
-	public String getState() {
-		return this._state;
 	}
 	
 	public int getLeitnerStage() {
