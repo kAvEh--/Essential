@@ -36,10 +36,12 @@ public class AddNewWordFragment extends DialogFragment {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
+						DatabaseHandler db = new DatabaseHandler(
+								getActivity());
+						lesson = db.getLessonToAdd();
 						Word w = new Word(0, lesson, word.getText().toString(),
 								desc.getText().toString(), "", "", trans
 										.getText().toString(), 0, 0, 0);
-						DatabaseHandler db = new DatabaseHandler(getActivity());
 						db.addWord(w);
 						db.close();
 						Toast.makeText(getActivity(), word.getText().toString() + " added to lesson " + lesson, 
@@ -54,9 +56,5 @@ public class AddNewWordFragment extends DialogFragment {
 							}
 						});
 		return builder.create();
-	}
-
-	public void setLesson(int l) {
-		this.lesson = l;
 	}
 }

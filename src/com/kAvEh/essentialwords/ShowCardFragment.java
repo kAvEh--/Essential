@@ -20,6 +20,7 @@ public class ShowCardFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		setRetainInstance(true);
 		View rootView = inflater.inflate(R.layout.fragment_show_cards,
 				container, false);
 		TextView title = (TextView) rootView.findViewById(R.id.dialog_title);
@@ -46,5 +47,12 @@ public class ShowCardFragment extends DialogFragment {
 
 	public void setlesson(int l) {
 		this.lesson = l;
+	}
+	
+	@Override
+	public void onDestroyView() {
+	  if (getDialog() != null && getRetainInstance())
+	    getDialog().setDismissMessage(null);
+	  super.onDestroyView();
 	}
 }

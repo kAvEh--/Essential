@@ -123,8 +123,8 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflater = getMenuInflater();
-//		inflater.inflate(R.menu.action_bar_main, menu);
+		// MenuInflater inflater = getMenuInflater();
+		// inflater.inflate(R.menu.action_bar_main, menu);
 		// Associate searchable configuration with the SearchView
 		// SearchManager searchManager = (SearchManager)
 		// getSystemService(Context.SEARCH_SERVICE);
@@ -179,12 +179,7 @@ public class MainActivity extends FragmentActivity {
 				long id) {
 			switch (position) {
 			case 0: {
-				DatabaseHandler db = new DatabaseHandler(
-						getApplicationContext());
-				int lesson = db.getLessonToAdd();
-				db.close();
 				AddNewWordFragment fr = new AddNewWordFragment();
-				fr.setLesson(lesson);
 				fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
 				fr.show(getSupportFragmentManager(), "Hello");
 				initialize();
@@ -294,7 +289,8 @@ public class MainActivity extends FragmentActivity {
 						break;
 					}
 				}
-				word_lists[i][0] = list.get(0).getWord();
+				if (list.size() > 0)
+					word_lists[i][0] = list.get(0).getWord();
 				if (list.size() > 1)
 					word_lists[i][1] = list.get(1).getWord();
 				else
