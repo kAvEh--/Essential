@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backbg" />
+        android:background="@drawable/backbgg" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     android:layout_marginTop="25dp"
                     android:background="@null"
                     android:scaleType="centerInside"
-                    android:src="@drawable/trans" />
+                    android:src="@drawable/transs" />
 
                 <TextView
                     android:id="@+id/back_trans"

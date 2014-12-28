@@ -55,10 +55,10 @@ public class MainActivity extends FragmentActivity {
 		menu[2] = "Help";
 		menu[3] = "About Us";
 		int[] icons = new int[4];
-		icons[0] = R.drawable.ic_share;
-		icons[1] = R.drawable.ic_share;
-		icons[2] = R.drawable.ic_share;
-		icons[3] = R.drawable.ic_share;
+		icons[0] = R.drawable.ic_action_add;
+		icons[1] = R.drawable.ic_action_leitner;
+		icons[2] = R.drawable.ic_action_help;
+		icons[3] = R.drawable.ic_action_info;
 		mDrawerList.setAdapter(new DrawerMenuAdapter(MainActivity.this, menu,
 				icons));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity {
 		// between the sliding drawer and the action bar app icon
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_navigation_drawer, /*
+		R.drawable.ic_action_drawer, /*
 										 * nav drawer image to replace 'Up'
 										 * caret
 										 */
@@ -92,9 +92,6 @@ public class MainActivity extends FragmentActivity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		if (savedInstanceState == null) {
-			// selectItem(0);
-		}
 		// ListView ----------
 		lv = (ListView) findViewById(R.id.lession_list);
 		new ShowListTask().execute();

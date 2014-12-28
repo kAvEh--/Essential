@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -21,7 +20,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -179,8 +177,9 @@ public class LessonActivity extends Activity implements
 	private void setLeitner() {
 		final ImageView bar = (ImageView) findViewById(R.id.footer_blue_bar);
 		final TextView text = (TextView) findViewById(R.id.footer_percent);
-		text.setBackgroundResource(0);
-		text.setOnClickListener(new OnClickListener() {
+		final RelativeLayout footer_text = (RelativeLayout) findViewById(R.id.footer_holder);
+		final ImageView footer_image = (ImageView) findViewById(R.id.footer_add_leitner);
+		footer_image.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -195,46 +194,54 @@ public class LessonActivity extends Activity implements
 							LayoutParams.WRAP_CONTENT,
 							LayoutParams.MATCH_PARENT, .5f));
 					text.setText("0 %");
-					text.setBackgroundResource(0);
+					footer_image.setVisibility(View.GONE);
+					footer_text.setVisibility(View.VISIBLE);
 				}
 			}
 		});
 		float percent = 0;
+		footer_image.setVisibility(View.GONE);
+		footer_text.setVisibility(View.GONE);
 		switch (_w.getLeitnerStage()) {
 		case 0: {
 			percent = 0;
-			text.setText("");
-			text.setBackgroundResource(R.drawable.add);
+			footer_image.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 1: {
 			percent = .3f;
 			text.setText("0 %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 2: {
 			percent = (float) (1 + (0.9 * (2 - _w.getLeitnerPart())));
 			text.setText(Math.round(((4 - _w.getLeitnerPart()) * 3.2)) + " %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 3: {
 			percent = (float) (2.8 + ((4 - _w.getLeitnerPart()) * 0.5));
 			text.setText(Math.round(((8 - _w.getLeitnerPart()) * 3.2)) + " %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 4: {
 			percent = (float) (4.8 + ((8 - _w.getLeitnerPart()) * 0.275));
 			text.setText(Math.round(((16 - _w.getLeitnerPart()) * 3.2)) + " %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 5: {
 			percent = (float) (7 + ((16 - _w.getLeitnerPart()) * 0.18125));
 			text.setText(Math.round(((32 - _w.getLeitnerPart()) * 3.2)) + " %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 6: {
 			percent = 9.9f;
 			text.setText("100 %");
+			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		default:
@@ -242,6 +249,16 @@ public class LessonActivity extends Activity implements
 		}
 		bar.setLayoutParams(new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, percent));
+	}
+	
+	public void removeLeitner(View v) {
+		_w.setLeitnerPart(0);
+		_w.setLeitnerStage(0);
+		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+		db.setLeitner(_w.getID(), 0, 0);
+		db.close();
+		
+		setLeitner();
 	}
 
 	@SuppressLint("NewApi")
@@ -330,14 +347,16 @@ public class LessonActivity extends Activity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.action_bar_main, menu);
-		// Associate searchable configuration with the SearchView
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-				.getActionView();
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
+		// MenuInflater inflater = getMenuInflater();
+		// inflater.inflate(R.menu.action_bar_main, menu);
+		// // Associate searchable configuration with the SearchView
+		// SearchManager searchManager = (SearchManager)
+		// getSystemService(Context.SEARCH_SERVICE);
+		// SearchView searchView = (SearchView)
+		// menu.findItem(R.id.action_search)
+		// .getActionView();
+		// searchView.setSearchableInfo(searchManager
+		// .getSearchableInfo(getComponentName()));
 		return super.onCreateOptionsMenu(menu);
 	}
 

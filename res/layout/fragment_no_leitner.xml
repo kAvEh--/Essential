@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backbg" />
+        android:background="@drawable/backbgg" />
 
     <LinearLayout
         android:layout_width="match_parent"

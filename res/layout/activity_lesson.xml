@@ -79,15 +79,43 @@
                     android:src="@drawable/leitner" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/footer_percent"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:textSize="20sp" />
+                android:layout_weight="2" >
+
+                <ImageView
+                    android:id="@+id/footer_add_leitner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/add"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/footer_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/footer_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="removeLeitner"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_cancel" />
+                </RelativeLayout>
+            </RelativeLayout>
 
             <ImageButton
                 android:layout_width="0dp"

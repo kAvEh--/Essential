@@ -3,8 +3,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="right"
-    android:background="@color/main_theme_background" >
+    android:layout_gravity="right" >
 
     <FrameLayout
         android:id="@+id/content_frame"
@@ -15,7 +14,7 @@
         android:id="@+id/excer_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_theme_background"
+        android:background="@color/backgrounde6"
         android:paddingBottom="11dp" >
 
         <TextView
@@ -63,7 +62,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/backbg" />
+                android:background="@drawable/backbgg" />
 
             <ScrollView
                 android:layout_width="match_parent"

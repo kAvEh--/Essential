@@ -85,7 +85,7 @@ public class LeitnerActivity extends Activity implements
 
 	public void generateword(View v) {
 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-		db.generateLeitner();
+//		db.generateLeitner();
 		db.close();
 		updateStage();
 	}
@@ -348,7 +348,7 @@ public class LeitnerActivity extends Activity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.action_bar_main, menu);
+//		inflater.inflate(R.menu.action_bar_main, menu);
 		// Associate searchable configuration with the SearchView
 		// SearchManager searchManager = (SearchManager)
 		// getSystemService(Context.SEARCH_SERVICE);
