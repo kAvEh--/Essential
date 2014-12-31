@@ -58,7 +58,7 @@ public class LessonAdapter extends BaseAdapter {
 		TextView l_3;
 		TextView l_4;
 		TextView l_5;
-		TextView more;
+		RelativeLayout more;
 	}
 
 	@SuppressLint("InflateParams")
@@ -86,14 +86,14 @@ public class LessonAdapter extends BaseAdapter {
 			viewHolder.l_4 = (TextView) vi.findViewById(R.id.list_leitner_4);
 			viewHolder.l_5 = (TextView) vi.findViewById(R.id.list_leitner_5);
 			viewHolder.header.setOnClickListener(mHeaderClickListener);
-			viewHolder.more = (TextView) vi
-					.findViewById(R.id.list_example_more);
+			viewHolder.more = (RelativeLayout) vi
+					.findViewById(R.id.lesson_list_body);
 			viewHolder.more.setOnClickListener(moreClickListener);
 			vi.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) vi.getTag();
 		}
-		viewHolder.lessonTitle.setText("Lesson    " + (position + 1));
+		viewHolder.lessonTitle.setText("Lesson " + (position + 1));
 		viewHolder.ex_1.setText(word_lists[position][0]);
 		viewHolder.ex_2.setText(word_lists[position][1]);
 		viewHolder.ex_3.setText(word_lists[position][2]);
@@ -120,7 +120,7 @@ public class LessonAdapter extends BaseAdapter {
 			viewHolder.l_5.setText("-");
 
 		if (position >= 30)
-			viewHolder.excer.setVisibility(View.GONE);
+			viewHolder.excer.setVisibility(View.INVISIBLE);
 		else
 			viewHolder.excer.setVisibility(View.VISIBLE);
 		

@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:background="#793D1A"
         android:gravity="center"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:textColor="#ccc"
         android:textSize="20sp" />
-    
-    <ImageView 
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="#fff" />
@@ -28,6 +28,7 @@
         android:columnWidth="200dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
+        android:listSelector="#aaa"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp" >

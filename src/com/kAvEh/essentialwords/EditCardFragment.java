@@ -11,13 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddNewWordFragment extends DialogFragment {
+public class EditCardFragment extends DialogFragment {
 
 	EditText word;
 	EditText desc;
 	EditText trans;
 	int lesson;
 	boolean isLeitner = false;
+	Word _word;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -29,6 +30,9 @@ public class AddNewWordFragment extends DialogFragment {
 		word = (EditText) vi.findViewById(R.id.add_word);
 		desc = (EditText) vi.findViewById(R.id.add_desc);
 		trans = (EditText) vi.findViewById(R.id.add_trans);
+		word.setText(_word.getWord());
+		desc.setText(_word.getPart2());
+		trans.setText(_word.getTrans());
 
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
@@ -39,31 +43,24 @@ public class AddNewWordFragment extends DialogFragment {
 					public void onClick(DialogInterface dialog, int id) {
 						DatabaseHandler db = new DatabaseHandler(getActivity());
 						lesson = db.getLessonToAdd();
-						Word w;
-						if (isLeitner) {
-							w = new Word(0, lesson, word.getText().toString(),
-									desc.getText().toString(), "", "", trans
-											.getText().toString(), 0, 1, 1);
-						} else {
-							w = new Word(0, lesson, word.getText().toString(),
-									desc.getText().toString(), "", "", trans
-											.getText().toString(), 0, 0, 0);
-						}
-						db.addWord(w);
+						Word tmp = new Word(_word.getID(), _word.getLesson(),
+								word.getText().toString(), _word.getpart1(),
+								desc.getText().toString(), _word.getExample(),
+								trans.getText().toString(), _word.getStar(),
+								_word.getLeitnerStage(), _word.getLeitnerPart());
+						db.editWord(tmp);
 						db.close();
-						Toast.makeText(
-								getActivity(),
-								word.getText().toString() + " added to lesson "
-										+ lesson, Toast.LENGTH_LONG).show();
-						if (isLeitner)
-							((LeitnerActivity) getActivity()).updateStage();
-						AddNewWordFragment.this.getDialog().cancel();
+						Toast.makeText(getActivity(),
+								word.getText().toString() + " edited.",
+								Toast.LENGTH_LONG).show();
+						((LessonActivity) getActivity()).updateList();
+						EditCardFragment.this.getDialog().cancel();
 					}
 				})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								AddNewWordFragment.this.getDialog().cancel();
+								EditCardFragment.this.getDialog().cancel();
 							}
 						});
 		return builder.create();
@@ -71,5 +68,9 @@ public class AddNewWordFragment extends DialogFragment {
 
 	public void setFlag() {
 		isLeitner = true;
+	}
+
+	public void setContent(Word w) {
+		_word = w;
 	}
 }

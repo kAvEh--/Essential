@@ -3,33 +3,33 @@ package com.kAvEh.essentialwords;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
-import android.view.Menu;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class ExcerciseActivity extends Activity {
+public class ExcerciseActivity extends FragmentActivity {
 
 	int lesson_num;
 	int excer_num = 0;
@@ -41,7 +41,6 @@ public class ExcerciseActivity extends Activity {
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	private String[] mPlanetTitles;
 
 	TextView header;
 	TextView exc_num;
@@ -61,7 +60,13 @@ public class ExcerciseActivity extends Activity {
 
 	private Handler mHandler = new Handler();
 
-	@SuppressLint("NewApi")
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_MAX_OFF_PATH = 250;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private GestureDetector gestureDetector;
+	View.OnTouchListener gestureListener;
+
+	@SuppressLint({ "NewApi", "ClickableViewAccessibility" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,8 +74,18 @@ public class ExcerciseActivity extends Activity {
 		Intent i = getIntent();
 		lesson_num = i.getIntExtra("Num", 1);
 
+		// Gesture detection
+		gestureDetector = new GestureDetector(this, new MyGestureDetector());
+		gestureListener = new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				return gestureDetector.onTouchEvent(event);
+			}
+		};
+
+		RelativeLayout main_rl = (RelativeLayout) findViewById(R.id.excer_main);
+		main_rl.setOnTouchListener(gestureListener);
+
 		mTitle = mDrawerTitle = getTitle();
-		mPlanetTitles = getResources().getStringArray(R.array.lessions_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -79,8 +94,18 @@ public class ExcerciseActivity extends Activity {
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
 				GravityCompat.START);
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.drawer_list_item, mPlanetTitles));
+		String[] menu = new String[4];
+		menu[0] = "Add Word";
+		menu[1] = "Leitner";
+		menu[2] = "Help";
+		menu[3] = "About Us";
+		int[] icons = new int[4];
+		icons[0] = R.drawable.ic_action_add;
+		icons[1] = R.drawable.ic_action_leitner;
+		icons[2] = R.drawable.ic_action_help;
+		icons[3] = R.drawable.ic_action_info;
+		mDrawerList.setAdapter(new DrawerMenuAdapter(ExcerciseActivity.this,
+				menu, icons));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -91,10 +116,9 @@ public class ExcerciseActivity extends Activity {
 		// between the sliding drawer and the action bar app icon
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_navigation_drawer, /*
-										 * nav drawer image to replace 'Up'
-										 * caret
-										 */
+		R.drawable.ic_action_drawer, /*
+									 * nav drawer image to replace 'Up' caret
+									 */
 		R.string.drawer_open, /* "open drawer" description for accessibility */
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
@@ -110,11 +134,10 @@ public class ExcerciseActivity extends Activity {
 											// onPrepareOptionsMenu()
 			}
 		};
+		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		if (savedInstanceState == null) {
-			selectItem(0);
-		}
+		// end of Drawer Menu
 
 		// ---------------
 		header = (TextView) findViewById(R.id.excer_header);
@@ -299,52 +322,13 @@ public class ExcerciseActivity extends Activity {
 
 	@SuppressLint("NewApi")
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-//		MenuInflater inflater = getMenuInflater();
-//		inflater.inflate(R.menu.action_bar_main, menu);
-//		// Associate searchable configuration with the SearchView
-//		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-//				.getActionView();
-//		searchView.setSearchableInfo(searchManager
-//				.getSearchableInfo(getComponentName()));
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content
-		// view
-
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@SuppressLint("NewApi")
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
 		// ActionBarDrawerToggle will take care of this.
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action buttons
-		switch (item.getItemId()) {
-		case R.id.action_websearch:
-			// create intent to perform web search for this planet
-			Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-			intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-			// catch event that there's no activity to handle intent
-			if (intent.resolveActivity(getPackageManager()) != null) {
-				startActivity(intent);
-			} else {
-				Toast.makeText(this, R.string.app_not_available,
-						Toast.LENGTH_LONG).show();
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return false;
 	}
 
 	/* The click listner for ListView in the navigation drawer */
@@ -353,25 +337,28 @@ public class ExcerciseActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			selectItem(position);
-		}
-	}
+			switch (position) {
+			case 0: {
+				AddNewWordFragment fr = new AddNewWordFragment();
+				fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+				fr.show(getSupportFragmentManager(), "Hello");
+			}
+				break;
 
-	private void selectItem(int position) {
-		/*
-		 * update the main content by replacing fragments Fragment fragment =
-		 * new LessionFragment(); Bundle args = new Bundle();
-		 * fragment.setArguments(args);
-		 * 
-		 * FragmentManager fragmentManager = getFragmentManager();
-		 * fragmentManager.beginTransaction().replace(R.id.content_frame,
-		 * fragment).commit();
-		 * 
-		 * // update selected item and title, then close the drawer
-		 * mDrawerList.setItemChecked(position, true);
-		 * setTitle(mPlanetTitles[position]);
-		 * mDrawerLayout.closeDrawer(mDrawerList);
-		 */
+			case 1: {
+				Intent i = new Intent(ExcerciseActivity.this,
+						LeitnerActivity.class);
+				startActivity(i);
+			}
+				break;
+			case 2:
+
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 
 	@SuppressLint("NewApi")
@@ -400,4 +387,42 @@ public class ExcerciseActivity extends Activity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	class MyGestureDetector extends SimpleOnGestureListener {
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			try {
+				if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+					return false;
+				// right to left swipe
+				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+					// Left
+					if (excer_num == 14)
+						excer_num = 0;
+					else
+						excer_num += 1;
+
+					setExcercise(excer_num);
+				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+					// Right
+					if (excer_num == 0)
+						excer_num = 14;
+					else
+						excer_num -= 1;
+
+					setExcercise(excer_num);
+				}
+			} catch (Exception e) {
+				// nothing
+			}
+			return false;
+		}
+
+		@Override
+		public boolean onDown(MotionEvent e) {
+			return true;
+		}
+	}
 }

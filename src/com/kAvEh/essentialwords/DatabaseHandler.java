@@ -134,10 +134,19 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 		db.close();
 	}
 
+	public void editWord(Word w) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		String sql = "UPDATE " + TABLE_LESSONS + " SET " + KEY_WORD + " = '"
+				+ w.getWord() + "' , " + KEY_PART2 + " = '" + w.getPart2()
+				+ "' ,  " + KEY_TRANSLATION + " = '" + w.getTrans()
+				+ "' WHERE " + KEY_ID + " = " + w.getID() + ";";
+		db.execSQL(sql);
+		db.close();
+	}
+
 	public int getLessonNum() {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor mCount = db
-				.rawQuery("SELECT * FROM " + TABLE_LESSON, null);
+		Cursor mCount = db.rawQuery("SELECT * FROM " + TABLE_LESSON, null);
 		mCount.moveToFirst();
 		int count = mCount.getCount();
 		mCount.close();
@@ -235,6 +244,35 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 				KEY_LESSON, KEY_WORD, KEY_PART1, KEY_PART2, KEY_EXAMPLE,
 				KEY_TRANSLATION, KEY_STAR, KEY_L_STAGE, KEY_L_PART },
 				KEY_LESSON + "=?", new String[] { String.valueOf(num) }, null,
+				null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				Word word = new Word(cursor.getInt(cursor
+						.getColumnIndex(KEY_ID)), cursor.getInt(cursor
+						.getColumnIndex(KEY_LESSON)), cursor.getString(cursor
+						.getColumnIndex(KEY_WORD)), cursor.getString(cursor
+						.getColumnIndex(KEY_PART1)), cursor.getString(cursor
+						.getColumnIndex(KEY_PART2)), cursor.getString(cursor
+						.getColumnIndex(KEY_EXAMPLE)), cursor.getString(cursor
+						.getColumnIndex(KEY_TRANSLATION)), cursor.getInt(cursor
+						.getColumnIndex(KEY_STAR)), cursor.getInt(cursor
+						.getColumnIndex(KEY_L_STAGE)), cursor.getInt(cursor
+						.getColumnIndex(KEY_L_PART)));
+				lesson.add(word);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		db.close();
+		return lesson;
+	}
+	
+	public ArrayList<Word> getLearnedWords() {
+		ArrayList<Word> lesson = new ArrayList<Word>();
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.query(TABLE_LESSONS, new String[] { KEY_ID,
+				KEY_LESSON, KEY_WORD, KEY_PART1, KEY_PART2, KEY_EXAMPLE,
+				KEY_TRANSLATION, KEY_STAR, KEY_L_STAGE, KEY_L_PART },
+				KEY_L_STAGE + "=?", new String[] { String.valueOf(6) }, null,
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {

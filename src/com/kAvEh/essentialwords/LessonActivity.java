@@ -6,35 +6,36 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class LessonActivity extends Activity implements
+public class LessonActivity extends FragmentActivity implements
 		TextToSpeech.OnInitListener {
 
 	private DrawerLayout mDrawerLayout;
@@ -43,7 +44,6 @@ public class LessonActivity extends Activity implements
 
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	private String[] mPlanetTitles;
 
 	private int mLesson;
 
@@ -63,7 +63,13 @@ public class LessonActivity extends Activity implements
 
 	private TextToSpeech tts;
 
-	@SuppressLint("NewApi")
+	private static final int SWIPE_MIN_DISTANCE = 120;
+	private static final int SWIPE_MAX_OFF_PATH = 250;
+	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+	private GestureDetector gestureDetector;
+	View.OnTouchListener gestureListener;
+
+	@SuppressLint({ "NewApi", "ClickableViewAccessibility" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,11 +78,22 @@ public class LessonActivity extends Activity implements
 		Intent i = getIntent();
 		mLesson = i.getIntExtra("Num", 1);
 		int toWord = i.getIntExtra("Word", 0);
+		int toId = i.getIntExtra("WordID", 0);
 
 		tts = new TextToSpeech(this, this);
 
+		// Gesture detection
+		gestureDetector = new GestureDetector(this, new MyGestureDetector());
+		gestureListener = new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				return gestureDetector.onTouchEvent(event);
+			}
+		};
+
+		RelativeLayout main_rl = (RelativeLayout) findViewById(R.id.detail_main);
+		main_rl.setOnTouchListener(gestureListener);
+
 		mTitle = mDrawerTitle = getTitle();
-		mPlanetTitles = getResources().getStringArray(R.array.lessions_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -85,9 +102,41 @@ public class LessonActivity extends Activity implements
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
 				GravityCompat.START);
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-				R.layout.drawer_list_item, mPlanetTitles));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		String[] menu;
+		int[] icons;
+		if (mLesson > 30) {
+			menu = new String[4];
+			menu[0] = "Add Word";
+			menu[1] = "Leitner";
+			menu[2] = "Help";
+			menu[3] = "About Us";
+			icons = new int[4];
+			icons[0] = R.drawable.ic_action_add;
+			icons[1] = R.drawable.ic_action_leitner;
+			icons[2] = R.drawable.ic_action_help;
+			icons[3] = R.drawable.ic_action_info;
+		} else {
+			menu = new String[5];
+			menu[0] = "Add Word";
+			menu[1] = "Excercise";
+			menu[2] = "Leitner";
+			menu[3] = "Help";
+			menu[4] = "About Us";
+			icons = new int[5];
+			icons[0] = R.drawable.ic_action_add;
+			icons[1] = R.drawable.ic_action_exer;
+			icons[2] = R.drawable.ic_action_leitner;
+			icons[3] = R.drawable.ic_action_help;
+			icons[4] = R.drawable.ic_action_info;
+		}
+		mDrawerList.setAdapter(new DrawerMenuAdapter(LessonActivity.this, menu,
+				icons));
+		if (mLesson > 30) {
+			mDrawerList
+					.setOnItemClickListener(new DrawerItemClickListenerCustom());
+		} else {
+			mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		}
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -97,10 +146,9 @@ public class LessonActivity extends Activity implements
 		// between the sliding drawer and the action bar app icon
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_navigation_drawer, /*
-										 * nav drawer image to replace 'Up'
-										 * caret
-										 */
+		R.drawable.ic_action_drawer, /*
+									 * nav drawer image to replace 'Up' caret
+									 */
 		R.string.drawer_open, /* "open drawer" description for accessibility */
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
@@ -116,7 +164,10 @@ public class LessonActivity extends Activity implements
 											// onPrepareOptionsMenu()
 			}
 		};
+		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		// end of Drawer Menu
 
 		// render word card ----------
 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
@@ -148,6 +199,14 @@ public class LessonActivity extends Activity implements
 			indicator = toWord - 1;
 		else
 			indicator = 0;
+		if (toId != 0) {
+			for (int j = 0; j < words.size(); j++) {
+				if (words.get(j).getID() == toId) {
+					indicator = j;
+					break;
+				}
+			}
+		}
 		if (indicator < words.size() - 1)
 			next.setVisibility(View.VISIBLE);
 		else
@@ -165,6 +224,7 @@ public class LessonActivity extends Activity implements
 
 		front_fr.setWord(_w.getWord());
 		front_fr.setLesson("Lesson " + _w.getLesson());
+		front_fr.setLessonNum(_w.getLesson());
 		front_fr.setNumber((indicator + 1) + "/" + words.size());
 		ft = fm.beginTransaction();
 
@@ -193,7 +253,7 @@ public class LessonActivity extends Activity implements
 					bar.setLayoutParams(new LinearLayout.LayoutParams(
 							LayoutParams.WRAP_CONTENT,
 							LayoutParams.MATCH_PARENT, .5f));
-					text.setText("0 %");
+					text.setText("0%");
 					footer_image.setVisibility(View.GONE);
 					footer_text.setVisibility(View.VISIBLE);
 				}
@@ -210,37 +270,37 @@ public class LessonActivity extends Activity implements
 			break;
 		case 1: {
 			percent = .3f;
-			text.setText("0 %");
+			text.setText("0%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 2: {
 			percent = (float) (1 + (0.9 * (2 - _w.getLeitnerPart())));
-			text.setText(Math.round(((4 - _w.getLeitnerPart()) * 3.2)) + " %");
+			text.setText(Math.round(((4 - _w.getLeitnerPart()) * 3.2)) + "%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 3: {
 			percent = (float) (2.8 + ((4 - _w.getLeitnerPart()) * 0.5));
-			text.setText(Math.round(((8 - _w.getLeitnerPart()) * 3.2)) + " %");
+			text.setText(Math.round(((8 - _w.getLeitnerPart()) * 3.2)) + "%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 4: {
 			percent = (float) (4.8 + ((8 - _w.getLeitnerPart()) * 0.275));
-			text.setText(Math.round(((16 - _w.getLeitnerPart()) * 3.2)) + " %");
+			text.setText(Math.round(((16 - _w.getLeitnerPart()) * 3.2)) + "%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 5: {
 			percent = (float) (7 + ((16 - _w.getLeitnerPart()) * 0.18125));
-			text.setText(Math.round(((32 - _w.getLeitnerPart()) * 3.2)) + " %");
+			text.setText(Math.round(((32 - _w.getLeitnerPart()) * 3.2)) + "%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 6: {
 			percent = 9.9f;
-			text.setText("100 %");
+			text.setText("100%");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
@@ -250,14 +310,14 @@ public class LessonActivity extends Activity implements
 		bar.setLayoutParams(new LinearLayout.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT, percent));
 	}
-	
+
 	public void removeLeitner(View v) {
 		_w.setLeitnerPart(0);
 		_w.setLeitnerStage(0);
 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 		db.setLeitner(_w.getID(), 0, 0);
 		db.close();
-		
+
 		setLeitner();
 	}
 
@@ -276,18 +336,40 @@ public class LessonActivity extends Activity implements
 
 	@SuppressLint("NewApi")
 	public void flipCardBack(View v) {
-		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-		db.setLeitner(_w.getID(), 1, 1);
-		db.close();
 		front_fr = new FrontCardFragment();
 		front_fr.setWord(_w.getWord());
 		front_fr.setLesson("Lesson " + _w.getLesson());
+		front_fr.setLessonNum(_w.getLesson());
 		front_fr.setNumber((indicator + 1) + "/" + words.size());
 		ft = fm.beginTransaction();
 		ft.setCustomAnimations(R.animator.card_flip_right_in,
 				R.animator.card_flip_right_out, R.animator.card_flip_left_in,
 				R.animator.card_flip_left_out).replace(R.id.frontFragment,
 				front_fr);
+		ft.commit();
+	}
+
+	@SuppressLint("NewApi")
+	public void editCard(View v) {
+		EditCardFragment edit = new EditCardFragment();
+		edit.setContent(_w);
+		edit.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+		edit.show(getSupportFragmentManager(), "Hello");
+	}
+
+	@SuppressLint("NewApi")
+	public void updateList() {
+		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+		words = db.getLesson(mLesson);
+		db.close();
+		_w = words.get(indicator);
+		front_fr = new FrontCardFragment();
+		front_fr.setWord(_w.getWord());
+		front_fr.setLesson("Lesson " + _w.getLesson());
+		front_fr.setLessonNum(_w.getLesson());
+		front_fr.setNumber((indicator + 1) + "/" + words.size());
+		ft = fm.beginTransaction();
+		ft.replace(R.id.frontFragment, front_fr);
 		ft.commit();
 	}
 
@@ -306,6 +388,7 @@ public class LessonActivity extends Activity implements
 		_w = words.get(indicator);
 		front_fr = new FrontCardFragment();
 		front_fr.setWord(_w.getWord());
+		front_fr.setLessonNum(_w.getLesson());
 		front_fr.setLesson("Lesson " + _w.getLesson());
 		front_fr.setNumber((indicator + 1) + "/" + words.size());
 		ft = fm.beginTransaction();
@@ -326,6 +409,7 @@ public class LessonActivity extends Activity implements
 		_w = words.get(indicator);
 		front_fr = new FrontCardFragment();
 		front_fr.setWord(_w.getWord());
+		front_fr.setLessonNum(_w.getLesson());
 		front_fr.setLesson("Lesson " + _w.getLesson());
 		front_fr.setNumber((indicator + 1) + "/" + words.size());
 		ft = fm.beginTransaction();
@@ -376,23 +460,7 @@ public class LessonActivity extends Activity implements
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action buttons
-		switch (item.getItemId()) {
-		case R.id.action_websearch:
-			// create intent to perform web search for this planet
-			Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-			intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-			// catch event that there's no activity to handle intent
-			if (intent.resolveActivity(getPackageManager()) != null) {
-				startActivity(intent);
-			} else {
-				Toast.makeText(this, R.string.app_not_available,
-						Toast.LENGTH_LONG).show();
-			}
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		return false;
 	}
 
 	/* The click listner for ListView in the navigation drawer */
@@ -401,25 +469,62 @@ public class LessonActivity extends Activity implements
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			selectItem(position);
+			switch (position) {
+			case 0: {
+				AddNewWordFragment fr = new AddNewWordFragment();
+				fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+				fr.show(getSupportFragmentManager(), "Hello");
+			}
+				break;
+
+			case 1: {
+				Intent i = new Intent(LessonActivity.this,
+						ExcerciseActivity.class);
+				i.putExtra("Num", mLesson - 1);
+				startActivity(i);
+			}
+				break;
+			case 2: {
+				Intent i = new Intent(LessonActivity.this,
+						LeitnerActivity.class);
+				startActivity(i);
+			}
+
+				break;
+			case 3:
+
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
-	private void selectItem(int position) {
-		/*
-		 * update the main content by replacing fragments Fragment fragment =
-		 * new LessionFragment(); Bundle args = new Bundle();
-		 * fragment.setArguments(args);
-		 * 
-		 * FragmentManager fragmentManager = getFragmentManager();
-		 * fragmentManager.beginTransaction().replace(R.id.content_frame,
-		 * fragment).commit();
-		 * 
-		 * // update selected item and title, then close the drawer
-		 * mDrawerList.setItemChecked(position, true);
-		 * setTitle(mPlanetTitles[position]);
-		 * mDrawerLayout.closeDrawer(mDrawerList);
-		 */
+	/* The click listner for ListView in the navigation drawer */
+	private class DrawerItemClickListenerCustom implements
+			ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			switch (position) {
+			case 0: {
+				AddNewWordFragment fr = new AddNewWordFragment();
+				fr.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MyDialog);
+				fr.show(getSupportFragmentManager(), "Hello");
+			}
+				break;
+
+			case 1: {
+				Intent i = new Intent(LessonActivity.this,
+						LeitnerActivity.class);
+				startActivity(i);
+			}
+
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -478,6 +583,36 @@ public class LessonActivity extends Activity implements
 		} else {
 			Log.e("TTS", "Initilization Failed");
 		}
+	}
 
+	class MyGestureDetector extends SimpleOnGestureListener {
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			try {
+				if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+					return false;
+				// right to left swipe
+				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+					// Left
+					if (indicator < words.size() - 1)
+						next_word();
+				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+					// Right
+					if (indicator > 0)
+						prev_word();
+				}
+			} catch (Exception e) {
+				// nothing
+			}
+			return false;
+		}
+
+		@Override
+		public boolean onDown(MotionEvent e) {
+			return true;
+		}
 	}
 }

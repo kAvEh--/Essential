@@ -49,19 +49,23 @@ public class LeitnerBackFragment extends Fragment {
 			reset.setVisibility(View.INVISIBLE);
 		trans = (TextView) view.findViewById(R.id.back_trans);
 		trans.setText(_trans);
-		String text = _example;
-		int f1 = text.indexOf("~");
-		int f2 = text.indexOf("~", f1 + 1);
-		int f3 = text.indexOf("~", f2 + 1);
-		int f4 = text.indexOf("~", f3 + 1);
-		text = text.replaceAll("~", " ");
-		SpannableString spannable = new SpannableString(text);
-		// here we set the color
-		spannable.setSpan(new StyleSpan(Typeface.BOLD), f1, f2, 0);
-		spannable.setSpan(new ForegroundColorSpan(Color.BLUE), f1, f2, 0);
-		spannable.setSpan(new StyleSpan(Typeface.BOLD), f3, f4, 0);
-		spannable.setSpan(new ForegroundColorSpan(Color.BLUE), f3, f4, 0);
-		example.setText(spannable);
+		if (_example != null && _example.length() > 1) {
+			String text = _example;
+			int f1 = text.indexOf("~");
+			int f2 = text.indexOf("~", f1 + 1);
+			int f3 = text.indexOf("~", f2 + 1);
+			int f4 = text.indexOf("~", f3 + 1);
+			text = text.replaceAll("~", " ");
+			SpannableString spannable = new SpannableString(text);
+			// here we set the color
+			spannable.setSpan(new StyleSpan(Typeface.BOLD), f1, f2, 0);
+			spannable.setSpan(new ForegroundColorSpan(Color.BLUE), f1, f2, 0);
+			spannable.setSpan(new StyleSpan(Typeface.BOLD), f3, f4, 0);
+			spannable.setSpan(new ForegroundColorSpan(Color.BLUE), f3, f4, 0);
+			example.setText(spannable);
+		} else {
+			example.setText("");
+		}
 
 		return view;
 	}

@@ -150,5 +150,16 @@
         android:onClick="flipCardBack"
         android:scaleType="centerInside"
         android:src="@drawable/flip" />
+    
+    <ImageButton
+        android:id="@+id/card_edit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:onClick="editCard"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_action_exer" />
 
 </RelativeLayout>

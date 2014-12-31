@@ -33,6 +33,8 @@ public class MainActivity extends FragmentActivity {
 	private CharSequence mTitle;
 
 	private ListView lv;
+	
+	private int lastScroll;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -90,6 +92,7 @@ public class MainActivity extends FragmentActivity {
 											// onPrepareOptionsMenu()
 			}
 		};
+		mDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		// ListView ----------
@@ -110,6 +113,12 @@ public class MainActivity extends FragmentActivity {
 
 	private void initialize() {
 		new ShowListTask().execute();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		lastScroll = lv.getFirstVisiblePosition();
 	}
 
 	@Override
@@ -146,26 +155,10 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// The action bar home/up action should open or close the drawer.
 		// ActionBarDrawerToggle will take care of this.
-		// if (mDrawerToggle.onOptionsItemSelected(item)) {
-		// return true;
-		// }
-		// // Handle action buttons
-		// switch (item.getItemId()) {
-		// case R.id.action_websearch:
-		// // create intent to perform web search for this planet
-		// Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-		// intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-		// // catch event that there's no activity to handle intent
-		// if (intent.resolveActivity(getPackageManager()) != null) {
-		// startActivity(intent);
-		// } else {
-		// Toast.makeText(this, R.string.app_not_available,
-		// Toast.LENGTH_LONG).show();
-		// }
-		// return true;
-		// default:
-		return super.onOptionsItemSelected(item);
-		// }
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return false;
 	}
 
 	/* The click listner for ListView in the navigation drawer */
@@ -250,6 +243,9 @@ public class MainActivity extends FragmentActivity {
 			adapter = new LessonAdapter(MainActivity.this, word_lists,
 					word_data, lesson_num);
 			lv.setAdapter(adapter);
+			if (lastScroll > 0) {
+				lv.setSelectionFromTop(lastScroll, 0);
+			}
 		}
 
 		@SuppressWarnings({ "unchecked" })
