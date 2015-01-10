@@ -12,6 +12,8 @@
 
 # Add any project specific keep options here:
 keep class com.android.vending.billing
+-keep class ir.adad.NoProguard
+-keep class * extends ir.adad.NoProguard { *; }
 
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface

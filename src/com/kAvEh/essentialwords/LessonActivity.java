@@ -60,6 +60,8 @@ public class LessonActivity extends FragmentActivity implements
 	ImageButton prev;
 
 	int indicator;
+	
+	String day = "روز";
 
 	private TextToSpeech tts;
 
@@ -253,7 +255,7 @@ public class LessonActivity extends FragmentActivity implements
 					bar.setLayoutParams(new LinearLayout.LayoutParams(
 							LayoutParams.WRAP_CONTENT,
 							LayoutParams.MATCH_PARENT, .5f));
-					text.setText("0%");
+					text.setText(day + " 1");
 					footer_image.setVisibility(View.GONE);
 					footer_text.setVisibility(View.VISIBLE);
 				}
@@ -270,31 +272,31 @@ public class LessonActivity extends FragmentActivity implements
 			break;
 		case 1: {
 			percent = .3f;
-			text.setText("0%");
+			text.setText(day + " 1");
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 2: {
 			percent = (float) (1 + (0.9 * (2 - _w.getLeitnerPart())));
-			text.setText(Math.round(((4 - _w.getLeitnerPart()) * 3.2)) + "%");
+			text.setText(day + " " + (4 - _w.getLeitnerPart()));
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 3: {
 			percent = (float) (2.8 + ((4 - _w.getLeitnerPart()) * 0.5));
-			text.setText(Math.round(((8 - _w.getLeitnerPart()) * 3.2)) + "%");
+			text.setText(day + " " + (8 - _w.getLeitnerPart()));
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 4: {
 			percent = (float) (4.8 + ((8 - _w.getLeitnerPart()) * 0.275));
-			text.setText(Math.round(((16 - _w.getLeitnerPart()) * 3.2)) + "%");
+			text.setText(day + " " + (16 - _w.getLeitnerPart()));
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;
 		case 5: {
 			percent = (float) (7 + ((16 - _w.getLeitnerPart()) * 0.18125));
-			text.setText(Math.round(((32 - _w.getLeitnerPart()) * 3.2)) + "%");
+			text.setText(day + " " + (32 - _w.getLeitnerPart()));
 			footer_text.setVisibility(View.VISIBLE);
 		}
 			break;

@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
@@ -37,6 +38,10 @@
         <activity
             android:name=".LeitnerActivity"
             android:label="@string/title_activity_leitner" >
+        </activity>
+        <activity
+            android:name="ir.adad.AdadActivity"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>
 

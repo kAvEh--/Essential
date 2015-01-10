@@ -1,5 +1,6 @@
 package com.kAvEh.essentialwords;
 
+import ir.adad.Adad;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ public class EnteranceActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_enterance);
+		
+		Adad.setTestMode(true);
 		
 		ImageButton leitner = (ImageButton) findViewById(R.id.ent_leitner);
 		leitner.setOnClickListener(new OnClickListener() {

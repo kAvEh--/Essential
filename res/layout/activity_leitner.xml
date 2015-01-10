@@ -59,6 +59,16 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal" >
 
+            <TextView
+                android:id="@+id/footer_percent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textSize="20sp" />
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -86,16 +96,6 @@
                     android:src="@drawable/leitner" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/footer_percent"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:textSize="20sp" />
-
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -113,11 +113,25 @@
             android:layout_above="@id/leitner_footer"
             android:background="@drawable/bar3" />
 
+        <RelativeLayout
+            android:id="@+id/tt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bar3"
+            android:layout_gravity="center_horizontal" >
+
+            <ir.adad.AdView
+                android:id="@+id/ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                token="34e5f221515040639a2f7169e3649800" />
+        </RelativeLayout>
+
         <FrameLayout
             android:id="@+id/frontFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bar3"
+            android:layout_above="@id/tt"
             android:layout_below="@id/bar2"
             android:layout_marginBottom="7dp"
             android:layout_marginTop="7dp"

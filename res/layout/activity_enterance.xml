@@ -115,4 +115,17 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" >
+
+        <ir.adad.AdView
+            android:id="@+id/ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            token="34e5f221515040639a2f7169e3649800" />
+    </RelativeLayout>
+
 </LinearLayout>
