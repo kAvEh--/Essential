@@ -15,6 +15,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="#000" />
+        
+        <RelativeLayout
+            android:id="@+id/tt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" >
+
+            <ir.adad.AdView
+                android:id="@+id/ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                token="3f84c01597514909897ffe3c1c60ccf9" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <ListView

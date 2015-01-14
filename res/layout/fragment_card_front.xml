@@ -73,6 +73,6 @@
         android:background="@null"
         android:onClick="editCard"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_action_exer" />
+        android:src="@drawable/ic_edit" />
 
 </RelativeLayout>

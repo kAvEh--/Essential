@@ -13,8 +13,7 @@
         android:id="@+id/excer_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/backgrounde6"
-        android:paddingBottom="11dp" >
+        android:background="@color/backgrounde6" >
 
         <TextView
             android:id="@+id/excer_header"
@@ -54,8 +53,25 @@
             android:src="@drawable/left" />
 
         <RelativeLayout
+            android:id="@+id/tt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal" >
+
+            <ir.adad.AdView
+                android:id="@+id/ad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                token="3f84c01597514909897ffe3c1c60ccf9" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/excer_body_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tt"
             android:layout_below="@id/excer_num" >
 
             <ImageView

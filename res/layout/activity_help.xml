@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/help_main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background" >
+
+    <ImageView
+        android:id="@+id/help_header"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@drawable/bar1" />
+
+    <ImageButton
+        android:id="@+id/help_next"
+        android:layout_width="35dp"
+        android:layout_height="55dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="-6dp"
+        android:layout_marginRight="0dp"
+        android:background="@null"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/right" />
+
+    <ImageButton
+        android:id="@+id/help_prev"
+        android:layout_width="35dp"
+        android:layout_height="55dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="-6dp"
+        android:background="@null"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:scaleType="centerInside"
+        android:visibility="invisible"
+        android:src="@drawable/left" />
+
+    <FrameLayout
+        android:id="@+id/helpFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/help_header"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/help_next"
+        android:layout_toRightOf="@id/help_prev" />
+
+</RelativeLayout>

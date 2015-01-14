@@ -3,46 +3,12 @@
 
     <string name="app_name">Essential Words</string>
 
-    <string-array name="lessions_array">
-        <item>Lession 1</item>
-        <item>Lession 2</item>
-        <item>Lession 3</item>
-        <item>Lession 4</item>
-        <item>Lession 5</item>
-        <item>Lession 6</item>
-        <item>Lession 7</item>
-        <item>Lession 8</item>
-        <item>Lession 9</item>
-        <item>Lession 10</item>
-        <item>Lession 11</item>
-        <item>Lession 12</item>
-        <item>Lession 13</item>
-        <item>Lession 14</item>
-        <item>Lession 15</item>
-        <item>Lession 16</item>
-        <item>Lession 17</item>
-        <item>Lession 18</item>
-        <item>Lession 19</item>
-        <item>Lession 20</item>
-        <item>Lession 21</item>
-        <item>Lession 22</item>
-        <item>Lession 23</item>
-        <item>Lession 24</item>
-        <item>Lession 25</item>
-        <item>Lession 26</item>
-        <item>Lession 27</item>
-        <item>Lession 28</item>
-        <item>Lession 29</item>
-        <item>Lession 30</item>
-    </string-array>
-
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_websearch">Web search</string>
-    <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    <string name="title_activity_excrecise">ExcreciseActivity</string>
+    <string name="title_activity_excrecise">Excrecise</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_lesson">LessonActivity</string>
+    
     <string name="first_test">Choose the synonym.</string>
     <string name="second_test">Choose the word or phrase that is closest in meaning to the underlined word or phrase.</string>
 
@@ -60,8 +26,16 @@
     <color name="light_green">#C8F6C8</color>
     <color name="dark_green">#006400</color>
 
+    <string name="title_lessons_list">Lessons</string>
     <string name="title_activity_enterance">Essential Words</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_leitner">LeitnerActivity</string>
+    <string name="title_activity_leitner">Leitner</string>
+    <string name="title_activity_help">Help</string>
+    <string name="title_activity_about">About</string>
+    <string name="about1">این اپلیکیشن کتاب Essential Words for the TOEFL (شامل کلمه‌ها، مثال‌ها، تلفظ کلمه‌ها و تمرین‌ها) را به همراه جعبه لایتنر در اختیار شما قرار می‌دهد. شما می‌توانید هم کلمه‌های کتاب فوق و هم کلمه‌های انتخابی خود را به کمک جعبه‌ی لایتنر یاد بگیرید.</string>
+    <string name="about2">جعبه لایتنر ابزاری علمی برای یادگیری است که آموخته‌ها را از حافظه‌ی کوتاه‌مدت  به حافظه‌ی بلندمدت است منتقل می‌کند. این جعبه‌ی ۵ خانه‌ای در دهه‌ی ۷۰ میلادی توسط سباستین لایتنر اختراع شد. بر اساس یافته‌های علمی اگر مطلبی به خوبی فراگرفته شود بعد از یک ماه ۸۰ درصد آن فراموش می‌شود و فقط ۲۰ درصد به حافظه‌ی بلندمدت منتقل می‌شود. راه مقابله با این فراموشی تکرار است و جعبه‌ی لایتنر این تکرار را به شکلی بهینه برای ما فراهم می‌کند.</string>
+    <string name="about4">اگر مرز فرعی است فلش‌کارت را بدون خواندن به واحد بعد منتقل می‌کنیم.</string>
+    <string name="about5">اگر مرز اصلی‌ست فلش‌کارت را می‌خوانیم. اگر بلد بودیم به خانه‌ی بعد منتقل می‌کنیم و اگر بلد نبودیم به خانه‌ی اول می‌فرستیم.</string>
+    <string name="about6">خارج شدن فلش‌کارت از خانه‌ی پنجم به معنی انتقال آن مطلب به حافظه‌ی بلندمدت است. یاد گرفتن کامل هر مطلب به وسیله‌ی لایتنر حداقل یک ماه طول می‌کشد.</string>
+    <string name="about3">لایتنر جعبه‌ای ۵ خانه‌ای است که هر خانه دو برابر خانه‌ی قبلی‌ست. خانه شماره‌ی ۱ شامل یک واحد، شماره‌ی ۲ شامل دو واحد و به همین ترتیب خانه‌ی شماره‌ی ۵ شامل ۱۶ واحد است. مرز بین خانه‌ها را مرز اصلی و بین واحدهای داخل هر خانه را مرز فرعی می‌گوییم. مطالب را به صورت فلش کارت در خانه‌ی اول قرار می‌دهیم. روش کار به این صورت است که هر روز:</string>
 
 </resources>

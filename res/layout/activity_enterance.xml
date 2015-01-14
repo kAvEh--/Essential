@@ -5,7 +5,7 @@
     android:layout_gravity="center_horizontal"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.kAvEh.essentialwords.EnteranceActivity" >
+    tools:context="com.glass.essentialwords.EnteranceActivity" >
 
     <ImageView
         android:layout_width="match_parent"
@@ -60,6 +60,49 @@
             android:background="@null"
             android:scaleType="centerInside"
             android:src="@drawable/leitner_ic" />
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true" >
+
+            <ImageView
+                android:id="@+id/ent_leitner_in_ic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_leitner_in" />
+
+            <TextView
+                android:id="@+id/ent_leitner_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="33dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" >
+
+            <ImageView
+                android:id="@+id/ent_leitner_out_ic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_leitner_out3" />
+
+            <TextView
+                android:id="@+id/ent_leitner_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="33dp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -125,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            token="34e5f221515040639a2f7169e3649800" />
+            token="3f84c01597514909897ffe3c1c60ccf9" />
     </RelativeLayout>
 
 </LinearLayout>
