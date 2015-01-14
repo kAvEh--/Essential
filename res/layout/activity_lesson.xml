@@ -10,6 +10,19 @@
         android:layout_height="wrap_content"
         android:background="#ccc" >
 
+        <ImageView
+            android:id="@+id/bar1"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@drawable/bar1" />
+
+        <ImageView
+            android:id="@+id/bar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bar1"
+            android:background="@drawable/bar2" />
+
         <ImageButton
             android:id="@+id/lesson_next"
             android:layout_width="35dp"
@@ -132,6 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/lesson_footer"
+            android:layout_below="@id/bar2"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:layout_toLeftOf="@id/lesson_next"
