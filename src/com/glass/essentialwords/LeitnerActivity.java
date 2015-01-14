@@ -1,7 +1,5 @@
 package com.glass.essentialwords;
 
-import ir.adad.Adad;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -76,8 +74,6 @@ public class LeitnerActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_leitner);
 		
-		Adad.setTestMode(true);
-
 		// Gesture detection
 		gestureDetector = new GestureDetector(this, new MyGestureDetector());
 		gestureListener = new View.OnTouchListener() {
@@ -451,8 +447,16 @@ public class LeitnerActivity extends FragmentActivity implements
 				fr.show(getSupportFragmentManager(), "Hello");
 			}
 				break;
-			case 2:
+			case 2: {
+				Intent i = new Intent(LeitnerActivity.this, HelpActivity.class);
+				startActivity(i);
+			}
+				break;
 
+			case 3: {
+				Intent i = new Intent(LeitnerActivity.this, AboutActivity.class);
+				startActivity(i);
+			}
 				break;
 
 			default:

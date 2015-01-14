@@ -50,7 +50,8 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/excer_header"
             android:scaleType="fitStart"
-            android:src="@drawable/left" />
+            android:src="@drawable/left"
+            android:visibility="invisible" />
 
         <RelativeLayout
             android:id="@+id/tt"

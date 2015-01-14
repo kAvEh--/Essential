@@ -144,7 +144,7 @@ public class LessonAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			int position = (Integer) v.getTag();
-			Intent i = new Intent(activity, ExcerciseActivity.class);
+			Intent i = new Intent(activity, ExerciseActivity.class);
 			i.putExtra("Num", position);
 			activity.startActivity(i);
 		}

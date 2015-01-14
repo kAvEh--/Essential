@@ -29,11 +29,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ExcerciseActivity extends FragmentActivity {
+public class ExerciseActivity extends FragmentActivity {
 
 	int lesson_num;
 	int excer_num = 0;
-	ArrayList<Excercise> exc;
+	ArrayList<Exercise> exc;
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -66,11 +66,14 @@ public class ExcerciseActivity extends FragmentActivity {
 	private GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
 
+	ImageView excer_next;
+	ImageView excer_prev;
+
 	@SuppressLint({ "NewApi", "ClickableViewAccessibility" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_excrecise);
+		setContentView(R.layout.activity_exrecise);
 		Intent i = getIntent();
 		lesson_num = i.getIntExtra("Num", 1);
 
@@ -85,7 +88,7 @@ public class ExcerciseActivity extends FragmentActivity {
 		RelativeLayout main_rl = (RelativeLayout) findViewById(R.id.excer_main);
 		main_rl.setOnTouchListener(gestureListener);
 
-		setTitle("Excercise " + lesson_num);
+		setTitle("Exercise " + lesson_num);
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -105,7 +108,7 @@ public class ExcerciseActivity extends FragmentActivity {
 		icons[1] = R.drawable.ic_action_leitner;
 		icons[2] = R.drawable.ic_action_help;
 		icons[3] = R.drawable.ic_action_info;
-		mDrawerList.setAdapter(new DrawerMenuAdapter(ExcerciseActivity.this,
+		mDrawerList.setAdapter(new DrawerMenuAdapter(ExerciseActivity.this,
 				menu, icons));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -159,17 +162,21 @@ public class ExcerciseActivity extends FragmentActivity {
 		header.setText("Lesson " + (lesson_num + 1));
 		DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 		exc = db.getExcercise(lesson_num + 1);
-		ImageView excer_next = (ImageView) findViewById(R.id.excer_next);
-		ImageView excer_prev = (ImageView) findViewById(R.id.excer_prev);
+		excer_next = (ImageView) findViewById(R.id.excer_next);
+		excer_prev = (ImageView) findViewById(R.id.excer_prev);
 		setExcercise(excer_num);
 		excer_next.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (excer_num == 14)
-					excer_num = 0;
+					return;
 				else
 					excer_num += 1;
+
+				if (excer_num == 14)
+					excer_next.setVisibility(View.INVISIBLE);
+				excer_prev.setVisibility(View.VISIBLE);
 
 				setExcercise(excer_num);
 			}
@@ -179,9 +186,13 @@ public class ExcerciseActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				if (excer_num == 0)
-					excer_num = 14;
+					return;
 				else
 					excer_num -= 1;
+
+				if (excer_num == 0)
+					excer_prev.setVisibility(View.INVISIBLE);
+				excer_next.setVisibility(View.VISIBLE);
 
 				setExcercise(excer_num);
 			}
@@ -280,9 +291,13 @@ public class ExcerciseActivity extends FragmentActivity {
 			public void run() {
 				if (auto_next) {
 					if (excer_num == 14)
-						excer_num = 0;
+						return;
 					else
 						excer_num += 1;
+
+					if (excer_num == 14)
+						excer_next.setVisibility(View.INVISIBLE);
+					excer_prev.setVisibility(View.VISIBLE);
 
 					setExcercise(excer_num);
 				}
@@ -347,26 +362,28 @@ public class ExcerciseActivity extends FragmentActivity {
 				break;
 
 			case 1: {
-				Intent i = new Intent(ExcerciseActivity.this,
+				Intent i = new Intent(ExerciseActivity.this,
 						LeitnerActivity.class);
 				startActivity(i);
 			}
 				break;
-			case 2:
+			case 2: {
+				Intent i = new Intent(ExerciseActivity.this, HelpActivity.class);
+				startActivity(i);
+			}
+				break;
 
+			case 3: {
+				Intent i = new Intent(ExerciseActivity.this,
+						AboutActivity.class);
+				startActivity(i);
+			}
 				break;
 
 			default:
 				break;
 			}
 		}
-	}
-
-	@SuppressLint("NewApi")
-	@Override
-	public void setTitle(CharSequence title) {
-		mTitle = title;
-		getActionBar().setTitle(mTitle);
 	}
 
 	/**
@@ -400,18 +417,26 @@ public class ExcerciseActivity extends FragmentActivity {
 						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 					// Left
 					if (excer_num == 14)
-						excer_num = 0;
+						return false;
 					else
 						excer_num += 1;
+
+					if (excer_num == 14)
+						excer_next.setVisibility(View.INVISIBLE);
+					excer_prev.setVisibility(View.VISIBLE);
 
 					setExcercise(excer_num);
 				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
 						&& Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 					// Right
 					if (excer_num == 0)
-						excer_num = 14;
+						return false;
 					else
 						excer_num -= 1;
+
+					if (excer_num == 0)
+						excer_prev.setVisibility(View.INVISIBLE);
+					excer_next.setVisibility(View.VISIBLE);
 
 					setExcercise(excer_num);
 				}

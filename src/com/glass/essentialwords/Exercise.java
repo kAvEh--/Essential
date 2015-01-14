@@ -1,6 +1,6 @@
 package com.glass.essentialwords;
 
-public class Excercise {
+public class Exercise {
 	
 	private int _id;
 	private int _lesson;
@@ -14,7 +14,7 @@ public class Excercise {
 	private String _state;
 	private int _star;
 
-	public Excercise (int id, int lesson, String type, String question,
+	public Exercise (int id, int lesson, String type, String question,
 			String a, String b, String c, String d, String answer, String state, int star) {
 		this._id = id;
 		this._lesson = lesson;

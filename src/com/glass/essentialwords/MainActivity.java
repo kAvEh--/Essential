@@ -33,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 	private CharSequence mTitle;
 
 	private ListView lv;
-	
+
 	private int lastScroll;
 
 	@SuppressLint("NewApi")
@@ -75,9 +75,8 @@ public class MainActivity extends FragmentActivity {
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
 		R.drawable.ic_action_drawer, /*
-										 * nav drawer image to replace 'Up'
-										 * caret
-										 */
+									 * nav drawer image to replace 'Up' caret
+									 */
 		R.string.drawer_open, /* "open drawer" description for accessibility */
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
@@ -115,7 +114,7 @@ public class MainActivity extends FragmentActivity {
 	private void initialize() {
 		new ShowListTask().execute();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -182,22 +181,21 @@ public class MainActivity extends FragmentActivity {
 				startActivity(i);
 			}
 				break;
-			case 2:
-
+			case 2: {
+				Intent i = new Intent(MainActivity.this, HelpActivity.class);
+				startActivity(i);
+			}
 				break;
-			case 3:
 
+			case 3: {
+				Intent i = new Intent(MainActivity.this, AboutActivity.class);
+				startActivity(i);
+			}
 				break;
 			default:
 				break;
 			}
 		}
-	}
-
-	@Override
-	public void setTitle(CharSequence title) {
-		mTitle = title;
-		getActionBar().setTitle(mTitle);
 	}
 
 	/**

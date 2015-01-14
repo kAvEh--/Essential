@@ -12,6 +12,7 @@
 
     <application
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
@@ -20,7 +21,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.glass.essentialwords.ExcerciseActivity"
+            android:name="com.glass.essentialwords.ExerciseActivity"
             android:label="@string/title_activity_excrecise" >
         </activity>
         <activity

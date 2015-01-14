@@ -19,11 +19,11 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 	// All Static variables
 	// Database Version
 	// TODO
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
 	// Database Name
 	// TODO
-	private static final String DATABASE_NAME = "WordsDBV8";
+	private static final String DATABASE_NAME = "WordsDBV9";
 
 	// Location table name
 	private static final String TABLE_LESSON = "lesson";
@@ -302,30 +302,30 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 				KEY_TRANSLATION, KEY_STAR, KEY_L_STAGE, KEY_L_PART },
 				KEY_L_STAGE + "=?", new String[] { String.valueOf(6) }, null,
 				null, null, null);
-		
+
 		int counter = cursor.getCount();
-		
+
 		cursor.close();
 		db.close();
 		return counter;
 	}
 
 	public int getLeitnerWordsCount() {
-		String selectQuery = "SELECT * FROM " + TABLE_LESSONS
-				+ " WHERE " + KEY_L_STAGE + " < 6 AND " + KEY_L_STAGE + " > 0;";
+		String selectQuery = "SELECT * FROM " + TABLE_LESSONS + " WHERE "
+				+ KEY_L_STAGE + " < 6 AND " + KEY_L_STAGE + " > 0;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
-		
+
 		int counter = cursor.getCount();
-		
+
 		cursor.close();
 		db.close();
 		return counter;
 	}
 
-	public ArrayList<Excercise> getExcercise(int num) {
-		ArrayList<Excercise> excer = new ArrayList<Excercise>();
+	public ArrayList<Exercise> getExcercise(int num) {
+		ArrayList<Exercise> excer = new ArrayList<Exercise>();
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.query(TABLE_EXCERCISE, new String[] { KEY_ID,
 				KEY_LESSON, KEY_TYPE, KEY_QUESTION, KEY_A, KEY_B, KEY_C, KEY_D,
@@ -333,7 +333,7 @@ public class DatabaseHandler extends SQLiteAssetHelper {
 				new String[] { String.valueOf(num) }, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
-				Excercise excercise = new Excercise(cursor.getInt(cursor
+				Exercise excercise = new Exercise(cursor.getInt(cursor
 						.getColumnIndex(KEY_ID)), cursor.getInt(cursor
 						.getColumnIndex(KEY_LESSON)), cursor.getString(cursor
 						.getColumnIndex(KEY_TYPE)), cursor.getString(cursor

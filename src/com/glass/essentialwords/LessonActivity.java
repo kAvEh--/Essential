@@ -60,7 +60,7 @@ public class LessonActivity extends FragmentActivity implements
 	ImageButton prev;
 
 	int indicator;
-	
+
 	String day = "روز";
 
 	private TextToSpeech tts;
@@ -434,24 +434,13 @@ public class LessonActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// MenuInflater inflater = getMenuInflater();
-		// inflater.inflate(R.menu.action_bar_main, menu);
-		// // Associate searchable configuration with the SearchView
-		// SearchManager searchManager = (SearchManager)
-		// getSystemService(Context.SEARCH_SERVICE);
-		// SearchView searchView = (SearchView)
-		// menu.findItem(R.id.action_search)
-		// .getActionView();
-		// searchView.setSearchableInfo(searchManager
-		// .getSearchableInfo(getComponentName()));
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content
-		// view
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -482,7 +471,7 @@ public class LessonActivity extends FragmentActivity implements
 
 			case 1: {
 				Intent i = new Intent(LessonActivity.this,
-						ExcerciseActivity.class);
+						ExerciseActivity.class);
 				i.putExtra("Num", mLesson - 1);
 				startActivity(i);
 			}
@@ -494,8 +483,16 @@ public class LessonActivity extends FragmentActivity implements
 			}
 
 				break;
-			case 3:
+			case 3: {
+				Intent i = new Intent(LessonActivity.this, HelpActivity.class);
+				startActivity(i);
+			}
+				break;
 
+			case 4: {
+				Intent i = new Intent(LessonActivity.this, AboutActivity.class);
+				startActivity(i);
+			}
 				break;
 			default:
 				break;
@@ -528,12 +525,6 @@ public class LessonActivity extends FragmentActivity implements
 				break;
 			}
 		}
-	}
-
-	@Override
-	public void setTitle(CharSequence title) {
-		mTitle = title;
-		getActionBar().setTitle(mTitle);
 	}
 
 	/**

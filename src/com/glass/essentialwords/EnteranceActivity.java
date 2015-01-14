@@ -18,8 +18,6 @@ public class EnteranceActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_enterance);
 		
-		Adad.setTestMode(true);
-		
 		ImageButton leitner = (ImageButton) findViewById(R.id.ent_leitner);
 		leitner.setOnClickListener(new OnClickListener() {
 
